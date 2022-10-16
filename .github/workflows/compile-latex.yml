@@ -1,4 +1,4 @@
-name: latex
+name: compile-latex
 on:
   pull_request:
     branches:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working_directory: docs
-      pdf_name: INF20A-Froehlich-2032766-T3101
+      pdf_name: INF20A_Froehlich_2032766_T3101
     steps:
       - name: Checkout Git repository
         uses: actions/checkout@v2
