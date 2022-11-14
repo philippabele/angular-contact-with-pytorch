@@ -1,4 +1,4 @@
-\documentclass[a4paper, 11pt, oneside]{scrbook}
+\documentclass[a4paper, 12pt, oneside, toc=chapterentrywithdots]{scrbook}
 
 \input{settings.tex}
 
@@ -20,7 +20,9 @@
 
 \mainmatter
 
-\blinddocument
+\include{includes/introduction.tex}
+\include{includes/basics.tex}
+\include{includes/summary.tex}
 
 \nocite{*}
 
