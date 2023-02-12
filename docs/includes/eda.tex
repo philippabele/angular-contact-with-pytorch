@@ -1,0 +1,57 @@
+\chapter{Exploratory Data Analysis}
+\label{sec:eda}
+
+\ac{eda} is a statistical approach that involves analyzing and visualizing a dataset to understand its main characteristics and identify patterns and relationships within the data. The purpose of \ac{eda} is to gain insight into the data and detect any outliers, anomalies, or patterns that may be of interest. This is an essential step in the data analysis process, as it allows us to make informed decisions about the data and how it should be used in subsequent stages of the analysis.
+
+This chapter introduces some common tools used in \ac{eda}, based on the iris data set as an example. One of these tools is histograms, which provide a visual representation of the distribution of the data. A histogram consists of a series of bars, where each bar represents a range of values and the height of the bar represents the frequency of those values within the data. This information helps to understand the overall shape of the data, such as whether it is symmetric, skewed, or multimodal, as shown in figure \ref{fig:histogram}.
+
+\begin{figure}
+  \begin{center}
+    \resizebox{0.8\textwidth}{!}{\input{assets/eda/histogram.pgf}}
+  \end{center}
+  \caption{Histogram of iris data.}
+  \label{fig:histogram}
+\end{figure}
+
+Boxplots are another common tool in \ac{eda}. They provide a summary of the distribution of the data, represented by a box that represents the middle 50\% of the data, a line that represents the median, and whiskers that extend from the box to the minimum and maximum values of the data. Boxplots are useful for identifying outliers and understanding the spread and skewness of the data, as shown in figure \ref{fig:boxplot}.
+
+\begin{figure}
+  \begin{center}
+    \resizebox{0.8\textwidth}{!}{\input{assets/eda/boxplot.pgf}}
+  \end{center}
+  \caption{Boxplot of iris data.}
+  \label{fig:boxplot}
+\end{figure}
+
+Pairplots allow us to visualize relationships between variables. A pairplot is a type of scatterplot matrix, where each variable is plotted against all other variables in the data. This information is useful for identifying patterns and correlations between variables and understanding relationships between multiple variables, as shown in figure \ref{fig:pairplot}.
+
+\begin{figure}
+  \begin{center}
+    \resizebox{1\textwidth}{!}{\input{assets/eda/pairplot.pgf}}
+  \end{center}
+  \caption{Pairplot of iris data.}
+  \label{fig:pairplot}
+\end{figure}
+
+In addition to visualizing the data, \ac{eda} also involves calculating numerical summaries of the data. For example, correlation and covariance are measures of the relationship between variables and help to understand the strength and direction of the relationship between variables, as shown in figure \ref{fig:cor-cov}.
+
+\begin{figure}
+  \begin{center}
+    % I cannot get this to work
+    % \inputpgf{assets/eda}{cor-cov.pgf}
+  \end{center}
+  \caption{Correlation and covariance of iris data.}
+  \label{fig:cor-cov}
+\end{figure}
+
+Cross-correlation is another useful measure in \ac{eda} that determines how two signals are related, particularly in time-series data. Cross-correlation helps to determine the lag between two signals and understand whether there is any association between them, as shown in figure \ref{fig:cross-cor}.
+
+\begin{figure}
+  \begin{center}
+    \resizebox{0.8\textwidth}{!}{\input{assets/eda/cross-cor.pgf}}
+  \end{center}
+  \caption{Cross-correlation of iris data.}
+  \label{fig:cross-cor}
+\end{figure}
+
+In conclusion, \ac{eda} is a critical step in the data analysis process, and involves visualizing and summarizing the data in order to gain insight and make informed decisions about the data. Whether you are using histograms, boxplots, pairplots, correlation, covariance, or cross-correlation, it is important to understand the information that each of these tools can provide, and how they can help you to better understand your data.
