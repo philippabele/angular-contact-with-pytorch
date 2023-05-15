@@ -1,8 +1,61 @@
-\chapter{Grundlagen}
-\label{sec:grundlagen}
+\chapter{Basics}
+\label{sec:basics}
+
+\section{PyTorch}
+\subsection{Tensors}
+
+Tensors are a powerful data structure used in PyTorch to represent and manipulate multi-dimensional arrays.
+They are similar to arrays and matrices, but have additional features optimized for use in deep learning applications.
+Tensors can be used to represent inputs, outputs, and parameters of a model, and can be run on GPUs or other hardware accelerators for faster processing.
+They are designed to support automatic differentiation, a crucial aspect of training deep learning models.
+Tensors can be created from data or NumPy arrays and have attributes that describe their shape, datatype, and device location.
+With over 100 available tensor operations in PyTorch, including arithmetic, linear algebra, matrix manipulation, and sampling, they provide a flexible and efficient way to perform a wide range of mathematical operations required in deep learning.
 
 
-\section{Beispielkapitel}
+\subsection{Datasets & Dataloaders}
+
+Datasets and data loaders are two important concepts for data processing and model training in PyTorch.
+A dataset in PyTorch is an object that holds the data, such as images and labels, that will be used for training or testing a model.
+On the other hand, a data loader is an object that can efficiently load data from a dataset and provide a convenient way to iterate over the samples.
+PyTorch provides built-in datasets and data loaders for common tasks, such as image classification, text analysis, and audio processing.
+Alternatively, one can create custom datasets and data loaders for their own data sources.
+
+
+\subsection{Transforms}
+
+Transforms are used in machine learning to manipulate data and make it suitable for training.
+In PyTorch, all TorchVision datasets have two parameters - transform to modify the features and target_transform to modify the labels - that accept callables containing the transformation logic.
+The torchvision.transforms module offers several commonly-used transforms out of the box.
+
+
+\subsection{Neural Networks}
+Neural networks are made up of layers that perform operations on data.
+PyTorch provides all the building blocks needed to build a neural network.
+Every module in PyTorch subclasses the nn.Module.
+A neural network is a module itself that consists of other modules (layers).
+This nested structure allows for building and managing complex architectures easily.
+
+To define a neural network, we subclass nn.Module and initialize the neural network layers in init.
+Every nn.Module subclass implements the operations on input data in the forward method.
+
+The last linear layer of the neural network returns logits, which are raw values in the range of [-infinity, infinity].
+These values are then passed to the nn.Softmax module to produce probabilities, which are scaled to the range of [0, 1].
+The dim parameter specifies the dimension along which the values must sum to 1.
+
+Many layers inside a neural network are parameterized, i.e. have associated weights and biases that are optimized during training.
+Subclassing nn.Module automatically tracks all fields defined inside your model object, and makes all parameters accessible using your model’s parameters() or named_parameters() methods.
+
+
+\subsection{Automatic differentiation with torch.autograd}
+PyTorch has a built-in differentiation engine called torch.autograd that supports automatic computation of gradient for any computational graph.
+It provides classes and functions implementing automatic differentiation of arbitrary scalar valued functions.
+It requires minimal changes to the existing code - you only need to declare Tensors for which gradients should be computed with the requires_grad=True keyword1.
+
+In order to optimize weights of parameters in the neural network, we need to compute the derivatives of our loss function with respect to parameters.
+To compute those derivatives, we call loss.backward (), and then retrieve the values from w.grad and b.grad1.
+
+The backward pass kicks off when .backward () is called on the DAG root. autograd then accumulates them in the respective tensor’s .grad attribute using the chain rule, propagates all the way to the leaf tensors1.
+
 \label{sec:beispiel}
 \begin{figure}[htb]
   \centering  
@@ -10,6 +63,7 @@
   \caption{Star Wars Logo}
   \label{fig:starwars}
 \end{figure}
+
 Weit hinten, hinter den Wortbergen, fern der Länder Vokalien und Konsonantien leben die Blindtexte (siehe Abb \ref{fig:starwars}). Abgeschieden wohnen Sie in Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans. Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt sie mit den nötigen Regelialien. Es ist ein paradiesmatisches Land, in dem einem gebratene Satzteile in den Mund fliegen. Nicht einmal von der allmächtigen Interpunktion werden die Blindtexte beherrscht – ein geradezu unorthographisches Leben. Eines Tages aber beschloß eine kleine Zeile Blindtext, ihr Name war Lorem Ipsum, hinaus zu gehen in die weite Grammatik. Der große Oxmox riet ihr davon ab, da \cite{test}.
 Weit hinten, hinter den Wortbergen, fern der Länder Vokalien und Konsonantien leben die Blindtexte (siehe Abb \ref{fig:starwars}). Abgeschieden wohnen Sie in Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans. Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt sie mit den nötigen Regelialien. Es ist ein paradiesmatisches Land, in dem einem gebratene Satzteile in den Mund fliegen. Nicht einmal von der allmächtigen Interpunktion werden die Blindtexte beherrscht – ein geradezu unorthographisches Leben. Eines Tages aber beschloß eine kleine Zeile Blindtext, ihr Name war Lorem Ipsum, hinaus zu gehen in die weite Grammatik.
 
