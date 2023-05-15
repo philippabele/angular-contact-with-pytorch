@@ -12,7 +12,7 @@ Tensors can be created from data or NumPy arrays and have attributes that descri
 With over 100 available tensor operations in PyTorch, including arithmetic, linear algebra, matrix manipulation, and sampling, they provide a flexible and efficient way to perform a wide range of mathematical operations required in deep learning.
 
 
-\subsection{Datasets & Dataloaders}
+\subsection{Datasets \& Dataloaders}
 
 Datasets and data loaders are two important concepts for data processing and model training in PyTorch.
 A dataset in PyTorch is an object that holds the data, such as images and labels, that will be used for training or testing a model.
@@ -24,8 +24,8 @@ Alternatively, one can create custom datasets and data loaders for their own dat
 \subsection{Transforms}
 
 Transforms are used in machine learning to manipulate data and make it suitable for training.
-In PyTorch, all TorchVision datasets have two parameters - transform to modify the features and target_transform to modify the labels - that accept callables containing the transformation logic.
-The torchvision.transforms module offers several commonly-used transforms out of the box.
+In PyTorch, all TorchVision datasets have two parameters - transform to modify the features and target\_transform to modify the labels - that accept callables containing the transformation logic.
+The torchvision.transforms module offers several commonly used transforms out of the box.
 
 
 \subsection{Neural Networks}
@@ -43,18 +43,18 @@ These values are then passed to the nn.Softmax module to produce probabilities, 
 The dim parameter specifies the dimension along which the values must sum to 1.
 
 Many layers inside a neural network are parameterized, i.e. have associated weights and biases that are optimized during training.
-Subclassing nn.Module automatically tracks all fields defined inside your model object, and makes all parameters accessible using your model’s parameters() or named_parameters() methods.
+Subclassing nn.Module automatically tracks all fields defined inside your model object, and makes all parameters accessible using your model's parameters() or named\_parameters() methods.
 
 
 \subsection{Automatic differentiation with torch.autograd}
 PyTorch has a built-in differentiation engine called torch.autograd that supports automatic computation of gradient for any computational graph.
 It provides classes and functions implementing automatic differentiation of arbitrary scalar valued functions.
-It requires minimal changes to the existing code - you only need to declare Tensors for which gradients should be computed with the requires_grad=True keyword1.
+It requires minimal changes to the existing code - you only need to declare Tensors for which gradients should be computed with the requires\_grad=True keyword.
 
 In order to optimize weights of parameters in the neural network, we need to compute the derivatives of our loss function with respect to parameters.
-To compute those derivatives, we call loss.backward (), and then retrieve the values from w.grad and b.grad1.
+To compute those derivatives, we call loss.backward(), and then retrieve the values from w.grad and b.grad.
 
-The backward pass kicks off when .backward () is called on the DAG root. autograd then accumulates them in the respective tensor’s .grad attribute using the chain rule, propagates all the way to the leaf tensors1.
+The backward pass kicks off when .backward() is called on the DAG root. autograd then accumulates them in the respective tensor's .grad attribute using the chain rule, propagates all the way to the leaf tensors.
 
 \label{sec:beispiel}
 \begin{figure}[htb]
