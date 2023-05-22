@@ -1,3 +1,11 @@
+# Dataset and model
+FashionMNIST/
+*.zip
+*.pth
+
+# Coderunner
+tempCodeRunnerFile.*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
