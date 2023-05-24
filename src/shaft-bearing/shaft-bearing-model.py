@@ -9,9 +9,9 @@ from sklearn.preprocessing import StandardScaler
 from torch.utils.tensorboard import SummaryWriter
 
 # Hyperparameters
-learning_rate = 1e-5
+learning_rate = 1e-2
 batch_size = 64
-epochs = 10000
+epochs = 1000
 test_size = 0.01
 log_count = 10
 
@@ -37,29 +37,20 @@ data = pd.read_csv('data/ShaftBearing/data.csv')
 X = data[['Fr', 'n']].values
 y = data['Lifetime'].values
 
-# Split into train and test set
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
-
 # Standardize the features
 X_scaler = StandardScaler()
-X_train = X_scaler.fit_transform(X_train)
-X_test = X_scaler.transform(X_test)
+X = X_scaler.fit_transform(X)
 
 # Standardize the labels
 y_scaler = StandardScaler()
-y_train = y_scaler.fit_transform(y_train.reshape(-1,1)).flatten()
-y_test = y_scaler.transform(y_test.reshape(-1,1)).flatten()
+y = y_scaler.fit_transform(y.reshape(-1,1)).flatten()
 
-# Create datasets
-train_data = ShaftBearingDataset(X_train, y_train)
-test_data = ShaftBearingDataset(X_test, y_test)
+# Create dataset
+dataset = ShaftBearingDataset(X, y)
+print(f'Data: {len(dataset)} samples')
 
-print(f'Train data: {len(train_data)} samples')
-print(f'Test data: {len(test_data)} samples')
-
-# Create dataloaders
-dataloader = DataLoader(train_data, batch_size=32, shuffle=True)
-test_loader = DataLoader(test_data, batch_size=32, shuffle=False)
+# Create dataloader
+dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
 
 # Get cpu, gpu or mps device for training.
 device = (
@@ -120,8 +111,7 @@ def train(dataloader, model, criterion, optimizer, epochs):
     mean_loss = np.mean(loss_values)
     std_loss = np.std(loss_values)
     for i, loss_value in enumerate(loss_values):
-        if np.abs(loss_value - mean_loss) <= 1*std_loss:
-            print(loss_value)
+        if np.abs(loss_value - mean_loss) <= 0.5*std_loss:
             writer_no_outliers.add_scalar('train/loss/no_outliers', loss_value, i)
 
 
@@ -143,4 +133,4 @@ if train_model:
         print('Saved model state as data/ShaftBearing/model.pth.')
 
 if eval_model:
-    eval(test_loader, model, criterion)
+    eval(dataloader, model, criterion)
