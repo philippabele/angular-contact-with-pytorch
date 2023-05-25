@@ -9,7 +9,7 @@ from sklearn.preprocessing import StandardScaler
 from torch.utils.tensorboard import SummaryWriter
 
 # Hyperparameters
-learning_rate = 1e-2
+learning_rate = 1e-3
 batch_size = 64
 epochs = 1000
 test_size = 0.01
