@@ -29,7 +29,7 @@ for i, column in enumerate(data.columns):
         sns.histplot(data[column], bins=n_bins, ax=ax1[i%3])
         ax1[i%3].set_title('Distribution of ' + column)
 fig1.suptitle('Distribution Plots')
-fig1.savefig('docs/assets/bearings-eda/distribution-plots.png')
+fig1.savefig('docs/assets/bearings-eda/distribution-plots.png', dpi=300)
 
 # Boxplots
 fig4, ax4 = plt.subplots(1, 3, figsize=(15, 5))
@@ -37,7 +37,7 @@ for i, column in enumerate(data.columns):
     sns.boxplot(x=data[column], ax=ax4[i%3])
     ax4[i%3].set_title('Boxplot of ' + column)
 fig4.suptitle('Boxplots')
-fig4.savefig('docs/assets/bearings-eda/boxplots.png')
+fig4.savefig('docs/assets/bearings-eda/boxplots.png', dpi=300)
 
 # Pairplot
 data_pair = data.copy()
@@ -45,7 +45,7 @@ data_pair['Lifetime_log'] = np.log(data_pair['Lifetime'])
 pair = sns.pairplot(data_pair, hue='Lifetime_log', palette='crest')
 plt.subplots_adjust(top=0.95)
 plt.suptitle('Pairplot of Fr, n, Lifetime and interaction features')
-pair.savefig('docs/assets/bearings-eda/pairplot.png')
+pair.savefig('docs/assets/bearings-eda/pairplot.png', dpi=300)
 
 # Heatmap of Correlations
 corr = data.corr()
@@ -55,7 +55,7 @@ print(corr)
 fig2 = plt.figure()
 sns.heatmap(corr, annot=True)
 plt.title('Heatmap of Correlations')
-fig2.savefig('docs/assets/bearings-eda/correlation-matrix.png')
+fig2.savefig('docs/assets/bearings-eda/correlation-matrix.png', dpi=300)
 
 # 3D Plot
 fig3 = plt.figure()
@@ -65,7 +65,7 @@ ax3.set_xlabel('Fr')
 ax3.set_ylabel('n')
 ax3.set_zlabel('Lifetime')
 plt.title('3D Plot of Fr, n and Lifetime')
-fig3.savefig('docs/assets/bearings-eda/3dplot.png')
+fig3.savefig('docs/assets/bearings-eda/3dplot.png', dpi=300)
 
 # Estimate Lifetime Function and calculate Residuals
 data['LifetimeFunc'] = 4.13786 * 10**17 * (data['Fr']) ** (-10/3) * (data['n']) ** (-1.0)
@@ -81,6 +81,6 @@ ax32.set_xlabel('Fr')
 ax32.set_ylabel('n')
 ax32.set_zlabel('Residuals')
 plt.title('3D Plot of Fr, n and Residuals')
-fig32.savefig('docs/assets/bearings-eda/3dplot-residuals.png')
+fig32.savefig('docs/assets/bearings-eda/3dplot-residuals.png', dpi=300)
 
 plt.show()
