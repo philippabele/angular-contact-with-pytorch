@@ -29,7 +29,7 @@ for i, column in enumerate(data.columns):
         sns.histplot(data[column], bins=n_bins, ax=ax1[i%3])
         ax1[i%3].set_title('Distribution of ' + column)
 fig1.suptitle('Distribution Plots')
-fig1.savefig('docs/assets/bearings-eda/distribution-plots.png', dpi=300)
+fig1.savefig('docs/assets/bearings-eda/histogram.png', dpi=300)
 
 # Boxplots
 fig4, ax4 = plt.subplots(1, 3, figsize=(15, 5))
@@ -37,7 +37,7 @@ for i, column in enumerate(data.columns):
     sns.boxplot(x=data[column], ax=ax4[i%3])
     ax4[i%3].set_title('Boxplot of ' + column)
 fig4.suptitle('Boxplots')
-fig4.savefig('docs/assets/bearings-eda/boxplots.png', dpi=300)
+fig4.savefig('docs/assets/bearings-eda/boxplot.png', dpi=300)
 
 # Pairplot
 data_pair = data.copy()

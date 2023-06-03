@@ -30,11 +30,25 @@ As previously noted, the $Fr$ and $n$ variables show a structured, uniform distr
 
 The main focus of our univariate analysis is on the $Lifetime$ variable. A notable observation is that $Lifetime$ follows an exponential decrease pattern as $Fr$ and $n$ increase. This behavior suggests a potential non-linear relationship between $Lifetime$ and the operational parameters $Fr$ and $n$.
 
-To better visualize the distribution of $Lifetime$, we employed histograms and boxplots. Since $Lifetime$ features a long tail towards lower values, we transformed the data using a log function. This transformation helped us to bucket the $Lifetime$ data into more meaningful intervals for visualization, revealing a clearer distribution pattern.
+To better visualize the distribution of $Lifetime$, we employed histograms and boxplots (Figure \ref{fig:bearings-histogram} and Figure \ref{fig:bearings-boxplot}). Since $Lifetime$ features a long tail towards lower values, we transformed the data using a log function. This transformation helped us to bucket the $Lifetime$ data into more meaningful intervals for visualization, revealing a clearer distribution pattern.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{assets/bearings-eda/histogram.png}
+    \caption{Histogram of Lifetime}
+    \label{fig:bearings-histogram}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{assets/bearings-eda/boxplot.png}
+    \caption{Boxplot of Lifetime}
+    \label{fig:bearings-boxplot}
+\end{figure}
 
 While the $Lifetime$ data features a wide range of values, this is to be expected given the nature of the measured attribute. The variation can be attributed to the range of operating conditions ($Fr$ and $n$) represented in the dataset. In this context, extreme values in $Lifetime$ are not necessarily "outliers" in the traditional sense, but rather indicate the broad spectrum of potential lifetimes for the shaft bearings under different conditions.
 
-Overall, univariate analysis offers valuable insights into each feature's characteristics. It also paves the way for a more nuanced understanding of interactions between features in the multivariate analysis.
+Overall, univariate analysis offers valuable insights into each feature's characteristics. It also paves the way for a more nuanced understanding of interactions between features in the subsequent multivariate analysis.
 
 
 \section{Multivariate Analysis}
