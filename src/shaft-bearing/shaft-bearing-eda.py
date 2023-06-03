@@ -1,44 +1,92 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 
 # Load the data
-df = pd.read_csv('data/shaft-bearing.csv')
+data = pd.read_csv('data/ShaftBearing/data.csv')
 
-# Print an overview of the data
-print(df.head())
-print(df.describe())
+# Create interaction features
+data['Fr*n'] = data['Fr']*data['n']
+data['Fr/n'] = data['Fr']/data['n']
+data['LifetimeFunc'] = 4.13786 * 10**17 * (data['Fr']) ** (-10/3) * (data['n']) ** (-1.0)
 
-# Create a figure and a grid of subplots
-fig, axes = plt.subplots(nrows=5, ncols=2, figsize=(20, 30))
+# Basic information about the data
+print('\nFirst few rows of the data:')
+print(data.head())
 
-# Histograms of all columns
-for i, column in enumerate(df.columns):
-    df[column].hist(bins=50, ax=axes[i, 0])
-    axes[i, 0].set_title(f'Histogram of {column}')
+print('\nBasic Summary Statistics:')
+print(data.describe())
 
-# Boxplots of all columns
-for i, column in enumerate(df.columns):
-    df[column].plot(kind='box', ax=axes[i, 1])
-    axes[i, 1].set_title(f'Boxplot of {column}')
+print('\nMissing Values:')
+print(data.isnull().sum())
 
-# Compute the correlation matrix
-corr_matrix = df.corr()
+# Distribution Plots (Logarithmic Scale for Lifetime)
+fig1, ax1 = plt.subplots(2, 3, figsize=(15, 10))
+for i, column in enumerate(data.columns):
+    if column == 'Lifetime' or column == 'Fr*n' or column == 'Fr/n' or column == 'LifetimeFunc':
+        # Create a temporary variable for Lifetime, replacing 0 with a very small number
+        temp_column = data[column].replace(0, 0.0001)
+        sns.histplot(np.log(temp_column), ax=ax1[i//3, i%3])
+        ax1[i//3, i%3].set_title('Logarithmic Scale for ' + column)
+    else:
+        n_bins = data[column].nunique()
+        sns.histplot(data[column], bins=n_bins, ax=ax1[i//3, i%3])
+        ax1[i//3, i%3].set_title('Distribution of ' + column)
+fig1.suptitle('Distribution Plots')
+fig1.savefig('docs/assets/bearings-eda/distribution-plots.png')
 
-# Generate a heatmap of the correlation matrix
-sns.heatmap(corr_matrix, annot=True, ax=axes[3, 0])
-axes[3, 0].set_title('Correlation Heatmap')
+# Boxplots
+fig4, ax4 = plt.subplots(2, 3, figsize=(15, 10))
+for i, column in enumerate(data.columns):
+    sns.boxplot(x=data[column], ax=ax4[i//3, i%3])
+    ax4[i//3, i%3].set_title('Boxplot of ' + column)
+fig4.suptitle('Boxplots')
+fig4.savefig('docs/assets/bearings-eda/boxplots.png')
 
-# Scatter plot of first two columns
-axes[4, 0].scatter(df.iloc[:, 0], df.iloc[:, 1])
-axes[4, 0].set_title(f'Scatter Plot: {df.columns[0]} vs {df.columns[1]}')
+# Pairplot
+data_pair = data.copy()
+data_pair['Lifetime_log'] = np.log(data_pair['Lifetime'])
+with sns.plotting_context("notebook", font_scale=1.5):
+    pair = sns.pairplot(data_pair, hue='Lifetime_log', palette='crest')
+    plt.subplots_adjust(top=0.95)
+    plt.suptitle('Pairplot of Fr, n, Lifetime and interaction features')
+    pair.savefig('docs/assets/bearings-eda/pairplot.png')
 
-# Scatter plot of last two columns
-axes[4, 1].scatter(df.iloc[:, 1], df.iloc[:, 2])
-axes[4, 1].set_title(f'Scatter Plot: {df.columns[1]} vs {df.columns[2]}')
+# Heatmap of Correlations
+corr = data.corr()
+print('\nCorrelation Matrix:')
+print(corr)
 
-sns.pairplot(df)
+fig2 = plt.figure()
+sns.heatmap(corr, annot=True)
+plt.title('Heatmap of Correlations')
+fig2.savefig('docs/assets/bearings-eda/correlation-matrix.png')
 
-# Show the plot
-plt.tight_layout(pad=5.0)
+# 3D Plot
+fig3 = plt.figure()
+ax3 = fig3.add_subplot(111, projection = '3d')
+ax3.scatter(data['Fr'], data['n'], data['Lifetime'])
+ax3.set_xlabel('Fr')
+ax3.set_ylabel('n')
+ax3.set_zlabel('Lifetime')
+plt.title('3D Plot of Fr, n and Lifetime')
+fig3.savefig('docs/assets/bearings-eda/3dplot.png')
+
+import matplotlib.pyplot as plt
+
+# 3D Plot of Residuals
+data['Residuals (% -1)'] = (data['Lifetime'] / data['LifetimeFunc']) - 1
+print('\nResiduals:')
+print(data['Residuals (% -1)'].describe())
+fig32 = plt.figure()
+ax32 = fig32.add_subplot(111, projection = '3d')
+ax32.scatter(data['Fr'], data['n'], data['Residuals (% -1)'] / 10**20)
+ax32.set_xlabel('Fr')
+ax32.set_ylabel('n')
+ax32.set_zlabel('Residuals')
+plt.title('3D Plot of Fr, n and Residuals')
+fig32.savefig('docs/assets/bearings-eda/3dplot-residuals.png')
+
+
 plt.show()
