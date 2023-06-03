@@ -44,7 +44,7 @@ The first step in our \ac{eda} is the initial inspection of the dataset. This in
   \end{tabular}
 \end{table}
 
-Our dataset is a structured one, with $Fr$ and $n$ recorded as integer values and $Lifetime$ as a floating-point number. A significant observation made at this point is the step-wise increment pattern seen in $Fr$ and $n$, and the corresponding decrement in $Lifetime$. Each unique combination of $Fr$ and $n$ represents different operational conditions for the bearing, and their influence on the bearing's expected $Lifetime$ is our primary point of interest.
+Our dataset is a structured one, with $Fr$ and $n$ recorded as integer values and $Lifetime$ as a floating-point number. $Fr$ represents the radial force applied on the bearing in Newton (N) and ranges from 200 to 4000 N. $n$ represents the rotational speed in rotations per minute (rpm) and spans values from 100 to 3500 rpm. $Lifetime$ is the expected lifetime of the bearing in hours (h) and varies from 88,445,568.46 h to 116.37 h. A significant observation made at this point is the step-wise increment pattern seen in $Fr$ and $n$, and the corresponding decrement in $Lifetime$. Each unique combination of $Fr$ and $n$ represents different operational conditions for the bearing, and their influence on the bearing's expected $Lifetime$ is our primary point of interest.
 
 No missing values are present in the dataset, which allows us to proceed with the analysis without the need for imputation or deletion strategies.
 
