@@ -15,7 +15,34 @@ Our EDA process will be systematic and iterative, revising our understanding as 
 
 \section{Initial Data Inspection}
 
-The first step in our \ac{eda} is the initial inspection of the dataset. This involves loading the data, examining a few records, identifying the type of each variable, checking for missing values, and noting the range of values each variable can take.
+The first step in our \ac{eda} is the initial inspection of the dataset. This involves loading the data, examining a few records, identifying the type of each variable, checking for missing values, and noting the range of values each variable can take. A selection of data points from the dataset is presented in Table \ref{table:bearings-dataset} for initial observation.
+
+\begin{table}[ht]
+  \centering
+  \caption{Sample of the Dataset}
+  \label{table:bearings-dataset}
+  \begin{tabular}{|c|c|c|c|}
+  \hline
+  Line & Fr & n & Lifetime \\
+  \hline
+  1 & 200 & 100 & 88,445,568.46 \\
+  2 & 200 & 200 & 44,222,784.23 \\
+  ... & ... & ... & ... \\
+  34 & 200 & 3400 & 2,601,340.249 \\
+  35 & 200 & 3500 & 2,527,016.242 \\
+  36 & 300 & 100 & 22,893,132.09 \\
+  37 & 300 & 200 & 11,446,566.04 \\
+  ... & ... & ... & ... \\
+  69 & 300 & 3400 & 673,327.4144 \\
+  70 & 300 & 3500 & 654,089.4882 \\
+  71 & 400 & 100 & 8,774,911.776 \\
+  72 & 400 & 200 & 4,387,455.888 \\
+  ... & ... & ... & ... \\
+  1364 & 4000 & 3400 & 119.7927427 \\
+  1365 & 4000 & 3500 & 116.3700929 \\
+  \hline
+  \end{tabular}
+\end{table}
 
 Our dataset is a structured one, with $Fr$ and $n$ recorded as integer values and $Lifetime$ as a floating-point number. A significant observation made at this point is the step-wise increment pattern seen in $Fr$ and $n$, and the corresponding decrement in $Lifetime$. Each unique combination of $Fr$ and $n$ represents different operational conditions for the bearing, and their influence on the bearing's expected $Lifetime$ is our primary point of interest.
 
