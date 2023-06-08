@@ -3,32 +3,19 @@ import torch
 import joblib
 from scipy.stats import boxcox
 from model import LifetimeModel
-from torch import nn
 import pandas as pd
-
-# Paths
-folder_path = 'data/ShaftBearing/lifetime-categorization/'
-model_path = folder_path + 'model-lt.pt'
-scaler_path = folder_path + 'scaler-lt.pt'
-bins_path = folder_path + 'bins.joblib'
-lambda_path = folder_path + 'lambda.joblib'
+from config import config
 
 # Load bins
-bins = joblib.load(bins_path)
-fitted_lambda = joblib.load(lambda_path)
-
-# Configuration
-input_size = 2
-output_size = 10
-hidden_size = 50
-activation_function = nn.ReLU()
+bins = joblib.load(config["bins_path"])
+fitted_lambda = joblib.load(config["lambda_path"])
 
 # Load the model
-model = LifetimeModel(input_size, hidden_size, output_size, activation_function)
-model.load_state_dict(torch.load(model_path))
+model = LifetimeModel(config["input_size"], config["hidden_size"], config["output_size"], config["activation_function"])
+model.load_state_dict(torch.load(config["model_path"]))
 
 # Load the scaler
-scaler = torch.load(scaler_path)
+scaler = torch.load(config["scaler_path"])
 
 # User Input
 Fr = float(input("Enter Fr value: "))

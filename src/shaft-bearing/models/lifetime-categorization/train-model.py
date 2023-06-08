@@ -5,24 +5,7 @@ from torch import nn
 from torch.utils.data import DataLoader
 import pandas as pd
 from model import LifetimeModel, BearingDataset
-
-# Paths
-folder_path = 'data/ShaftBearing/lifetime-categorization/'
-train_data_path = folder_path + 'train-lt.csv'
-val_data_path = folder_path + 'val-lt.csv'
-model_path = folder_path + 'model-lt.pt'
-
-# Configurations
-load_model = True
-save_model = True
-input_size = 2
-output_size = 10
-hidden_size = 50
-activation_function = nn.ReLU()
-learning_rate = 0.001
-epochs = 1000
-batch_size = 64
-prefer_cuda = False
+from config import config
 
 def load_data(train_data_path, val_data_path):
     print('Loading data for training and evaluation from csv files...')
@@ -67,32 +50,32 @@ def train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, epo
     print(f'Training took {training_time:.2f} seconds')
 
 # Load data
-train_features, train_targets, val_features, val_targets = load_data(train_data_path, val_data_path)
+train_features, train_targets, val_features, val_targets = load_data(config["train_data_path"], config["val_data_path"])
 
 # Check if CUDA is available and set the device
-device = torch.device("cuda" if torch.cuda.is_available() and prefer_cuda else "cpu")
+device = torch.device("cuda" if torch.cuda.is_available() and config["prefer_cuda"] else "cpu")
 print(f'Using device: {device}')
 
 # Initialize model
-model = LifetimeModel(input_size, hidden_size, output_size, activation_function)
-if load_model and os.path.exists(model_path):
+model = LifetimeModel(config["input_size"], config["hidden_size"], config["output_size"], config["activation_function"])
+if config["load_model"] and os.path.exists(config["model_path"]):
     print('Loading model from file...')
-    model.load_state_dict(torch.load(model_path))
+    model.load_state_dict(torch.load(config["model_path"]))
 model.to(device)
 
 train_dataset = BearingDataset(train_features, train_targets)
 val_dataset = BearingDataset(val_features, val_targets)
 
 # Creating PyTorch DataLoaders
-train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, pin_memory=True)
-val_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=True, pin_memory=True)
+train_dataloader = DataLoader(train_dataset, batch_size=config["batch_size"], shuffle=True, pin_memory=True)
+val_dataloader = DataLoader(val_dataset, batch_size=config["batch_size"], shuffle=True, pin_memory=True)
 
 # Optimizer and Loss Function
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+optimizer = torch.optim.Adam(model.parameters(), lr=config["learning_rate"])
 loss_fn = nn.CrossEntropyLoss()
 
-train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, epochs, device)
+train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, config["epochs"], device)
 
 # Save the model after training
-if save_model:
-    torch.save(model.state_dict(), model_path)
+if config["save_model"]:
+    torch.save(model.state_dict(), config["model_path"])
