@@ -1,4 +1,5 @@
 import os
+import time
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
@@ -12,15 +13,16 @@ val_data_path = folder_path + 'val-lt.csv'
 model_path = folder_path + 'model-lt.pt'
 
 # Configurations
-load_model = False
+load_model = True
 save_model = True
 input_size = 2
 output_size = 10
 hidden_size = 50
 activation_function = nn.ReLU()
 learning_rate = 0.001
-epochs = 100
+epochs = 1000
 batch_size = 64
+prefer_cuda = False
 
 def load_data(train_data_path, val_data_path):
     print('Loading data for training and evaluation from csv files...')
@@ -32,9 +34,11 @@ def load_data(train_data_path, val_data_path):
 
     return train_features.values, train_targets.values, val_features.values, val_targets.values
 
-def train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, epochs):
+def train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, epochs, device):
+    start_time = time.time()
     for epoch in range(epochs):
         for inputs, targets in train_dataloader:
+            inputs, targets = inputs.to(device), targets.to(device)
             # Forward pass
             outputs = model(inputs)
             loss = loss_fn(outputs, targets)
@@ -50,6 +54,7 @@ def train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, epo
             val_acc = 0
             with torch.no_grad():
                 for inputs, targets in val_dataloader:
+                    inputs, targets = inputs.to(device), targets.to(device)
                     outputs = model(inputs)
                     _, predicted = torch.max(outputs, 1)
                     val_loss += loss_fn(outputs, targets)
@@ -57,30 +62,36 @@ def train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, epo
 
             val_loss /= len(val_dataloader)
             val_acc /= len(val_targets)
-            print(f'Epoch {epoch}, Loss: {loss.item()}, Validation Loss: {val_loss.item()}, Validation Accuracy: {val_acc}')
-
+            print(f'Epoch {epoch}, Loss: {loss.item(): .3f}, Validation Loss: {val_loss.item(): .3f}, Validation Accuracy: {val_acc: .3f}')
+    training_time = time.time() - start_time
+    print(f'Training took {training_time:.2f} seconds')
 
 # Load data
 train_features, train_targets, val_features, val_targets = load_data(train_data_path, val_data_path)
+
+# Check if CUDA is available and set the device
+device = torch.device("cuda" if torch.cuda.is_available() and prefer_cuda else "cpu")
+print(f'Using device: {device}')
 
 # Initialize model
 model = LifetimeModel(input_size, hidden_size, output_size, activation_function)
 if load_model and os.path.exists(model_path):
     print('Loading model from file...')
     model.load_state_dict(torch.load(model_path))
+model.to(device)
 
 train_dataset = BearingDataset(train_features, train_targets)
 val_dataset = BearingDataset(val_features, val_targets)
 
 # Creating PyTorch DataLoaders
-train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-val_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=True)
+train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, pin_memory=True)
+val_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=True, pin_memory=True)
 
 # Optimizer and Loss Function
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 loss_fn = nn.CrossEntropyLoss()
 
-train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, epochs)
+train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, epochs, device)
 
 # Save the model after training
 if save_model:

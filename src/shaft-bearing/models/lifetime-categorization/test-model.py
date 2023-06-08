@@ -65,7 +65,7 @@ cf_matrix = confusion_matrix(all_targets, all_predictions)
 num_correct = np.sum(np.diag(cf_matrix))
 total_samples = np.sum(cf_matrix)
 total_accuracy = num_correct / total_samples
-print(f'Total Accuracy: {total_accuracy:.2f} ({num_correct} out of {total_samples} correct)')
+print(f'Total Accuracy: {total_accuracy:.3f} ({num_correct} out of {total_samples} correct)')
 
 # Plot confusion matrix
 plt.figure(figsize=(10, 7))
