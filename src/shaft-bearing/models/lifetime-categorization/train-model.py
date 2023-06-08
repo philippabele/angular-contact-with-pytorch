@@ -7,6 +7,11 @@ import pandas as pd
 from model import LifetimeModel, BearingDataset
 from config import config
 
+# Configuration
+prefer_cuda = False
+load_model = False
+save_model = True
+
 def load_data(train_data_path, val_data_path):
     print('Loading data for training and evaluation from csv files...')
     train_data = pd.read_csv(train_data_path)
@@ -53,12 +58,12 @@ def train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, epo
 train_features, train_targets, val_features, val_targets = load_data(config["train_data_path"], config["val_data_path"])
 
 # Check if CUDA is available and set the device
-device = torch.device("cuda" if torch.cuda.is_available() and config["prefer_cuda"] else "cpu")
+device = torch.device("cuda" if torch.cuda.is_available() and prefer_cuda else "cpu")
 print(f'Using device: {device}')
 
 # Initialize model
 model = LifetimeModel(config["input_size"], config["hidden_size"], config["output_size"], config["activation_function"])
-if config["load_model"] and os.path.exists(config["model_path"]):
+if load_model and os.path.exists(config["model_path"]):
     print('Loading model from file...')
     model.load_state_dict(torch.load(config["model_path"]))
 model.to(device)
@@ -77,5 +82,5 @@ loss_fn = nn.CrossEntropyLoss()
 train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, config["epochs"], device)
 
 # Save the model after training
-if config["save_model"]:
+if save_model:
     torch.save(model.state_dict(), config["model_path"])

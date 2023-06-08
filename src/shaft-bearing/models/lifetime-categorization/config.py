@@ -3,9 +3,6 @@ import os
 
 # Global Configuration
 config = {
-    "prefer_cuda": False,
-    "save_model": True,
-    "load_model": False,
     "folder_path": 'data/ShaftBearing/lifetime-categorization/',
     "input_size": 2,
     "output_size": 10,
@@ -20,7 +17,6 @@ config = {
 }
 
 # Paths
-config["data_path"] = os.path.join(config["folder_path"], 'data-lt.csv')
 config["train_data_path"] = os.path.join(config["folder_path"], 'train-lt.csv')
 config["val_data_path"] = os.path.join(config["folder_path"], 'val-lt.csv')
 config["test_data_path"] = os.path.join(config["folder_path"], 'test-lt.csv')

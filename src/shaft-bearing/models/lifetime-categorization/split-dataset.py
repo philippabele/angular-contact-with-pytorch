@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -8,7 +9,7 @@ import joblib
 from config import config
 
 print('Loading data from csv file...')
-data = pd.read_csv(config["data_path"])
+data = pd.read_csv(os.path.join(config["folder_path"], 'data-lt.csv'))
 
 # Box-Cox transformation
 data['Lifetime'], fitted_lambda = boxcox(data['Lifetime'])
