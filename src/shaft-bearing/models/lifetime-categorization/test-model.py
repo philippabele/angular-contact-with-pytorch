@@ -1,8 +1,12 @@
+import numpy as np
 import torch
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 from torch import nn
 from torch.utils.data import Dataset, DataLoader
 from model import LifetimeModel
+from sklearn.metrics import confusion_matrix
 
 # Paths
 folder_path = 'data/ShaftBearing/lifetime-categorization/'
@@ -45,12 +49,28 @@ test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
 # Test the model
 model.eval()
-test_acc = 0
+all_predictions = []
+all_targets = []
 with torch.no_grad():
     for inputs, targets in test_dataloader:
         outputs = model(inputs)
         _, predicted = torch.max(outputs, 1)
-        test_acc += (predicted == targets).sum().item()
+        all_predictions.extend(predicted.numpy())
+        all_targets.extend(targets.numpy())
 
-test_acc /= len(test_data)
-print(f'Test Accuracy: {test_acc}')
+# Create confusion matrix
+cf_matrix = confusion_matrix(all_targets, all_predictions)
+
+# Calculate total accuracy
+num_correct = np.sum(np.diag(cf_matrix))
+total_samples = np.sum(cf_matrix)
+total_accuracy = num_correct / total_samples
+print(f'Total Accuracy: {total_accuracy:.2f} ({num_correct} out of {total_samples} correct)')
+
+# Plot confusion matrix
+plt.figure(figsize=(10, 7))
+sns.heatmap(cf_matrix, annot=True, fmt="d", cmap="Blues")
+plt.xlabel('Predicted')
+plt.ylabel('True')
+plt.title('Confusion Matrix')
+plt.show()
