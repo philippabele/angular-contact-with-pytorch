@@ -34,7 +34,7 @@ with torch.no_grad():
     predicted_category = predicted_category.item()
 
 # Calculate the actual lifetime in hours
-Lifetime = 4.13786 * 10**17 * Fr ** (-10/3) * n ** (-1.0)
+Lifetime = 4.1378625767 * 10**17 * Fr ** (-10/3) * n ** (-1.0)
 
 # Calculate the actual lifetime bin
 if Lifetime > 0:
