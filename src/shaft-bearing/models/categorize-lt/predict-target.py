@@ -2,8 +2,8 @@ import numpy as np
 import torch
 import joblib
 from scipy.stats import boxcox
-from model import LifetimeModel
 import pandas as pd
+from model import LifetimeModel
 from config import config
 
 # Load bins

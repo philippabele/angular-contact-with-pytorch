@@ -3,10 +3,9 @@ import torch
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from torch import nn
-from torch.utils.data import Dataset, DataLoader
-from model import LifetimeModel, BearingDataset
+from torch.utils.data import DataLoader
 from sklearn.metrics import confusion_matrix
+from model import LifetimeModel, BearingDataset
 from config import config
 
 # Load the test dataset

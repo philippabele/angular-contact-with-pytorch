@@ -1,12 +1,12 @@
+import os
 import numpy as np
 import pandas as pd
-import os
 from config import config
 
 # Modify the ranges, intervals, and output path as needed
-fr_range = (1, 100)
-n_range = (1000, 10000)
-fr_interval = 2
+fr_range = (200, 5000)
+n_range = (200, 5000)
+fr_interval = 100
 n_interval = 100
 output_path = os.path.join(config["folder_path"], 'data-gen-lt.csv')
 
@@ -14,8 +14,8 @@ def generate_lifetime(fr, n):
     return 4.13786 * 10**17 * fr ** (-10/3) * n ** (-1.0)
 
 def generate_dataset(fr_range, n_range, fr_interval, n_interval, output_path):
-    fr_values = np.arange(fr_range[0], fr_range[1], fr_interval)
-    n_values = np.arange(n_range[0], n_range[1], n_interval)
+    fr_values = np.arange(fr_range[0], fr_range[1] + fr_interval, fr_interval)
+    n_values = np.arange(n_range[0], n_range[1] + n_interval, n_interval)
 
     data = []
     for fr in fr_values:
