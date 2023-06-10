@@ -1,4 +1,4 @@
-# README: Shaft Bearing Lifetime Prediction Models
+# Shaft Bearing Lifetime Prediction Models
 
 Welcome to the Shaft Bearing Lifetime Prediction codebase. This repository contains code for analyzing and predicting the lifetime of shaft bearings based on their frequency of rotation and load.
 
