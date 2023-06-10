@@ -3,7 +3,7 @@ import os
 
 # Global Configuration
 config = {
-    "folder_path": 'data/ShaftBearing/categorize-lt/',
+    "folder_path": 'data/shaft-bearing/categorize-lt/',
     "input_size": 2,
     "output_size": 10,
     "hidden_size": 200,

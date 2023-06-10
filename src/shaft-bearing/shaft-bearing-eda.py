@@ -4,7 +4,7 @@ import seaborn as sns
 import numpy as np
 
 # Load the data
-data = pd.read_csv('data/ShaftBearing/data.csv')
+data = pd.read_csv('data/shaft-bearing/data.csv')
 
 # Transform 'Lifetime' column using Logarithm and add it as a new column
 data['log(Lifetime)'] = np.log(data['Lifetime'])
