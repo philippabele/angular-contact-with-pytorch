@@ -3,7 +3,7 @@
 Welcome to the Shaft Bearing Lifetime Prediction codebase. This repository contains code for analyzing and predicting the lifetime of shaft bearings based on their frequency of rotation and load.
 
 ## Table of Contents
-- [README: Shaft Bearing Lifetime Prediction Models](#readme-shaft-bearing-lifetime-prediction-models)
+- [Shaft Bearing Lifetime Prediction Models](#shaft-bearing-lifetime-prediction-models)
   - [Table of Contents](#table-of-contents)
   - [Getting Started](#getting-started)
   - [Usage](#usage)
@@ -24,7 +24,9 @@ To use this codebase, you will need Python installed on your machine. This tutor
 
 ## Usage
 
-Execute scripts from the root of the project using Python. 
+Execute scripts from the root of the project using Python.
+
+The sample scripts in this readme use the categorize-lt model for categorizing Lifetime based on Fr and n. If you want to work with the model for categorizing n based on Fr and Lifetime, replace categorize-lt with categorize-n.
 
 ### Exploratory Data Analysis
 
