@@ -1,42 +1,83 @@
-# Contribution Guide
+# Shaft Bearing Lifetime Prediction Models
 
-Hey there! We are really excited that you are interested in contributing. This is a general contribution guide without any particular project or technology stack in mind. Before submitting your contribution, please make sure to take a moment and read through the following guide:
+Welcome to the Shaft Bearing Lifetime Prediction codebase. This repository contains code for analyzing and predicting the lifetime of shaft bearings based on their frequency of rotation and load.
 
-## 🙌 Sending Pull Request
+## Table of Contents
+- [Shaft Bearing Lifetime Prediction Models](#shaft-bearing-lifetime-prediction-models)
+  - [Table of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+  - [Usage](#usage)
+    - [Exploratory Data Analysis](#exploratory-data-analysis)
+    - [Generating Dataset](#generating-dataset)
+    - [Splitting Dataset](#splitting-dataset)
+    - [Training Models](#training-models)
+    - [Testing Models](#testing-models)
+    - [Predicting Targets](#predicting-targets)
+  - [Contributing](#contributing)
 
-### Discuss First
+## Getting Started
 
-Before you start to work on a feature pull request, it's always better to open a feature request issue first to discuss with the maintainers whether the feature is desired and the design of those features. This would help save time for both the maintainers and the contributors and help features to be shipped faster.
+To use this codebase, you will need Python installed on your machine. This tutorial assumes you are familiar with basic Python programming.
 
-For typo fixes, it's recommended to batch multiple typo fixes into one pull request to maintain a cleaner commit history.
+1. Clone this repository to your local machine.
+2. Ensure you have all the required libraries installed. (You might want to use a virtual environment)
 
-### Commit Convention
+## Usage
 
-We use [Conventional Commits](https://www.conventionalcommits.org/) for commit messages, which allows the changelog to be auto-generated based on the commits. Please read the guide through if you aren't familiar with it already.
+Execute scripts from the root of the project using Python.
 
-Only `fix:` and `feat:` will be presented in the changelog.
+The sample scripts in this readme use the categorize-lt model for categorizing Lifetime based on Fr and n. If you want to work with the model for categorizing n based on Fr and Lifetime, replace categorize-lt with categorize-n.
 
-Note that `fix:` and `feat:` are for **actual code changes** (that might affect logic).
-For typo or document changes, use `docs:` or `chore:` instead:
+### Exploratory Data Analysis
 
-- ~~`fix: typo`~~ -> `docs: fix typo`
+To perform Exploratory Data Analysis to understand the dataset and find important parameters, run:
 
-### Pull Request
-
-If you don't know how to send a Pull Request, we recommend reading [the guide](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request).
-
-When sending a pull request, make sure your PR's title also follows the [Commit Convention](#commit-conventions).
-
-If your PR fixes or resolves an existing issue, please add the following line in your PR description (replace `123` with a real issue number):
-
-```markdown
-fix #123
+```shell
+python src/shaft-bearing/shaft-bearing-eda.py
 ```
 
-This will let GitHub know the issues are linked, and automatically close them once the PR gets merged. Learn more at [the guide](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword).
+### Generating Dataset
 
-It's ok to have multiple commits in a single PR, you don't need to rebase or force push for your changes as we will use `Squash and Merge` to squash the commits into one commit when merging.
+Set the dataset range and interval parameters in the `split-dataset.py` script, then generate a dataset based on the equation for Lifetime by running:
 
-We do not add any commit hooks to allow for quick commits. But before you make a pull request, you should ensure that any lint/test scripts are passing.
+```shell
+python src/shaft-bearing/models/categorize-lt/generate-dataset.py
+```
 
-In general, please also make sure that there are no unrelated changes in a PR. For example, if your editor has made any changes to whitespace or formatting elsewhere in a file that you edited, please revert these so it is more obvious what your PR changes. And please avoid including multiple unrelated features or fixes in a single PR. If it is possible to separate them, it is better to have multiple PRs to review and merge separately. In general, a PR should do one thing only.
+This example uses the `categorize-lt` model. You can replace `categorize-lt` with `categorize-n` if you want to work with the other model.
+
+### Splitting Dataset
+
+Split the generated dataset into training, testing, and validation sets by running:
+
+```shell
+python src/shaft-bearing/models/categorize-lt/split-dataset.py
+```
+
+### Training Models
+
+Train the model on the dataset by running:
+
+```shell
+python src/shaft-bearing/models/categorize-lt/train-model.py
+```
+
+### Testing Models
+
+Test how well the trained model performs with the test dataset by running:
+
+```shell
+python src/shaft-bearing/models/categorize-lt/test-model.py
+```
+
+### Predicting Targets
+
+Input features manually and get an estimated target as output by running:
+
+```shell
+python src/shaft-bearing/models/categorize-lt/predict-target.py
+```
+
+## Contributing
+
+Contributions are warmly welcomed. For enhancements, bug fixes, or feature requests, please submit a pull request or create an issue. Adhere to the existing code style and structure. For detailed information on how to contribute, please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file.

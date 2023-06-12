@@ -3,6 +3,12 @@ FashionMNIST/
 runs/
 *.zip
 *.pth
+*.joblib
+*.pt
+train*.csv
+test*.csv
+val*.csv
+data-gen*.csv
 
 # Coderunner
 tempCodeRunnerFile.*
