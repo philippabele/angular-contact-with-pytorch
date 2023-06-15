@@ -12,11 +12,13 @@ prefer_cuda = False
 load_model = False
 save_model = True
 
-def load_data(train_data_path, val_data_path):
+def load_train_data(train_data_path, val_data_path):
     print('Loading data for training and evaluation from csv files...')
     train_data = pd.read_csv(train_data_path)
     val_data = pd.read_csv(val_data_path)
+    return train_data, val_data
 
+def split_train_features_targets(train_data, val_data):
     train_features, train_targets = train_data[['Fr', 'n']], train_data['Lifetime']
     val_features, val_targets = val_data[['Fr', 'n']], val_data['Lifetime']
 
@@ -24,7 +26,7 @@ def load_data(train_data_path, val_data_path):
 
 def train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, epochs, device):
     start_time = time.time()
-    for epoch in range(epochs):
+    for epoch in range(1, epochs + 1):
         for inputs, targets in train_dataloader:
             inputs, targets = inputs.to(device), targets.to(device)
             # Forward pass
@@ -49,38 +51,39 @@ def train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, epo
                     val_acc += (predicted == targets).sum().item()
 
             val_loss /= len(val_dataloader)
-            val_acc /= len(val_targets)
-            print(f'Epoch {epoch}, Loss: {loss.item(): .3f}, Validation Loss: {val_loss.item(): .3f}, Validation Accuracy: {val_acc: .3f}')
+            val_acc /= len(val_dataloader)
+            print(f'Epoch {epoch}/{epochs}, Loss: {loss.item(): .3f}, Validation Loss: {val_loss.item(): .3f}, Validation Accuracy: {val_acc: .3f}')
     training_time = time.time() - start_time
     print(f'Training took {training_time:.2f} seconds')
 
-# Load data
-train_features, train_targets, val_features, val_targets = load_data(config["train_data_path"], config["val_data_path"])
+# # Load data
+# train_data, val_data = load_train_data(config["train_data_path"], config["val_data_path"])
+# train_features, train_targets, val_features, val_targets = split_train_features_targets(train_data, val_data)
 
-# Check if CUDA is available and set the device
-device = torch.device("cuda" if torch.cuda.is_available() and prefer_cuda else "cpu")
-print(f'Using device: {device}')
+# # Check if CUDA is available and set the device
+# device = torch.device("cuda" if torch.cuda.is_available() and prefer_cuda else "cpu")
+# print(f'Using device: {device}')
 
-# Initialize model
-model = LifetimeModel(config["input_size"], config["hidden_size"], config["output_size"], config["activation_function"])
-if load_model and os.path.exists(config["model_path"]):
-    print('Loading model from file...')
-    model.load_state_dict(torch.load(config["model_path"]))
-model.to(device)
+# # Initialize model
+# model = LifetimeModel(config["input_size"], config["hidden_size"], config["output_size"], config["activation_function"])
+# if load_model and os.path.exists(config["model_path"]):
+#     print('Loading model from file...')
+#     model.load_state_dict(torch.load(config["model_path"]))
+# model.to(device)
 
-train_dataset = BearingDataset(train_features, train_targets)
-val_dataset = BearingDataset(val_features, val_targets)
+# train_dataset = BearingDataset(train_features, train_targets)
+# val_dataset = BearingDataset(val_features, val_targets)
 
-# Creating PyTorch DataLoaders
-train_dataloader = DataLoader(train_dataset, batch_size=config["batch_size"], shuffle=True, pin_memory=True)
-val_dataloader = DataLoader(val_dataset, batch_size=config["batch_size"], shuffle=True, pin_memory=True)
+# # Creating PyTorch DataLoaders
+# train_dataloader = DataLoader(train_dataset, batch_size=config["batch_size"], shuffle=True, pin_memory=True)
+# val_dataloader = DataLoader(val_dataset, batch_size=config["batch_size"], shuffle=True, pin_memory=True)
 
-# Optimizer and Loss Function
-optimizer = torch.optim.Adam(model.parameters(), lr=config["learning_rate"])
-loss_fn = nn.CrossEntropyLoss()
+# # Optimizer and Loss Function
+# optimizer = torch.optim.Adam(model.parameters(), lr=config["learning_rate"])
+# loss_fn = nn.CrossEntropyLoss()
 
-train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, config["epochs"], device)
+# train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, config["epochs"], device)
 
-# Save the model after training
-if save_model:
-    torch.save(model.state_dict(), config["model_path"])
+# # Save the model after training
+# if save_model:
+#     torch.save(model.state_dict(), config["model_path"])
