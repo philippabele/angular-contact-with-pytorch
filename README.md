@@ -26,32 +26,32 @@ To use this codebase, you will need Python installed on your machine. This tutor
 
 Execute scripts from the root of the project using Python.
 
-The sample scripts in this readme use the categorize-lt model for categorizing Lifetime based on Fr and n. If you want to work with the model for categorizing n based on Fr and Lifetime, replace categorize-lt with categorize-n.
+The sample scripts in this readme use the categorize_lt model for categorizing Lifetime based on Fr and n. If you want to work with the model for categorizing n based on Fr and Lifetime, replace categorize_lt with categorize_n.
 
 ### Exploratory Data Analysis
 
 To perform Exploratory Data Analysis to understand the dataset and find important parameters, run:
 
 ```shell
-python src/shaft-bearing/shaft-bearing-eda.py
+python src/shaftbearing/shaftbearing_eda.py
 ```
 
 ### Generating Dataset
 
-Set the dataset range and interval parameters in the `split-dataset.py` script, then generate a dataset based on the equation for Lifetime by running:
+Set the dataset range and interval parameters in the `split_dataset.py` script, then generate a dataset based on the equation for Lifetime by running:
 
 ```shell
-python src/shaft-bearing/models/categorize-lt/generate-dataset.py
+python src/shaftbearing/models/categorize_lt/generate_dataset.py
 ```
 
-This example uses the `categorize-lt` model. You can replace `categorize-lt` with `categorize-n` if you want to work with the other model.
+This example uses the `categorize_lt` model. You can replace `categorize_lt` with `categorize_n` if you want to work with the other model.
 
 ### Splitting Dataset
 
 Split the generated dataset into training, testing, and validation sets by running:
 
 ```shell
-python src/shaft-bearing/models/categorize-lt/split-dataset.py
+python src/shaftbearing/models/categorize_lt/split_dataset.py
 ```
 
 ### Training Models
@@ -59,7 +59,7 @@ python src/shaft-bearing/models/categorize-lt/split-dataset.py
 Train the model on the dataset by running:
 
 ```shell
-python src/shaft-bearing/models/categorize-lt/train-model.py
+python src/shaftbearing/models/categorize_lt/train_model.py
 ```
 
 ### Testing Models
@@ -67,7 +67,7 @@ python src/shaft-bearing/models/categorize-lt/train-model.py
 Test how well the trained model performs with the test dataset by running:
 
 ```shell
-python src/shaft-bearing/models/categorize-lt/test-model.py
+python src/shaftbearing/models/categorize_lt/train_model.py
 ```
 
 ### Predicting Targets
@@ -75,7 +75,7 @@ python src/shaft-bearing/models/categorize-lt/test-model.py
 Input features manually and get an estimated target as output by running:
 
 ```shell
-python src/shaft-bearing/models/categorize-lt/predict-target.py
+python src/shaftbearing/models/categorize_lt/predict_target.py
 ```
 
 ## Contributing

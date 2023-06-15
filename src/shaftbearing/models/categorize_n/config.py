@@ -3,13 +3,13 @@ import os
 
 # Global Configuration
 config = {
-    "folder_path": 'data/shaft-bearing/categorize-lt/',
+    "folder_path": 'data/shaftbearing/categorize_n/',
     "input_size": 2,
     "output_size": 10,
     "hidden_size": 200,
     "activation_function": nn.ReLU(),
     "learning_rate": 0.001,
-    "epochs": 100,
+    "epochs": 1000,
     "batch_size": 64,
     "prefer_cuda": False,
     "test_size": 0.2,
@@ -24,4 +24,4 @@ config["model_path"] = os.path.join(config["folder_path"], 'model.pt')
 config["scaler_path"] = os.path.join(config["folder_path"], 'scaler.pt')
 config["bins_path"] = os.path.join(config["folder_path"], 'bins.joblib')
 config["lambda_path"] = os.path.join(config["folder_path"], 'lambda.joblib')
-config["dataset_path"] = os.path.join(config["folder_path"], 'data-gen.csv')
+config["dataset_path"] = os.path.join(config["folder_path"], 'data_gen.csv')
