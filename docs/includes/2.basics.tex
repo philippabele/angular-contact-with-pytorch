@@ -5,7 +5,7 @@
 
 Machine learning is a branch of Artificial Intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Essentially, machine learning involves the creation of algorithms that can learn from and make decisions or predictions based on data. These algorithms work by discovering patterns and insights from data, which is particularly beneficial for decision-making and predictions.
 
-Tom Mitchell provides a classic definition that captures the essence of machine learning: "A computer program is said to learn from experience E with respect to some task T and some performance measure P, if its performance on T, as measured by P, improves with experience E" \cite[p. 2]{mitchell1997machine}.
+Tom Mitchell provides a classic definition that captures the essence of machine learning: ''A computer program is said to learn from experience E with respect to some task T and some performance measure P, if its performance on T, as measured by P, improves with experience E'' \cite[p. 2]{mitchell1997machine}.
 
 The range of applications for machine learning is extensive, making it an indispensable tool in numerous fields. With today's enormous amounts of data, machine learning is instrumental in harnessing this data for practical use. For instance, in business, it is employed to detect fraudulent activities and gain customer insights. In healthcare, it plays a vital role in identifying trends for improved diagnoses and treatments. Moreover, in the technology sector, it helps refine algorithms and expand the capabilities of AI systems.
 
@@ -14,7 +14,7 @@ Machine learning excels in identifying patterns within data and making predictio
 
 \subsection{Types of Machine Learning}
 
-Machine learning algorithms can be broadly categorized into three main types based on the nature of the learning signal or feedback available to them during training. The three types are supervised learning, unsupervised learning, and reinforcement learning.
+Machine learning algorithms can be broadly categorized into three main types based on the nature of the learning signal or feedback available to them during training. The three types are supervised learning, unsupervised learning, and reinforcement learning \cite[p. 10 f.]{ketkar21}.
 
 \subsubsection{Supervised Learning}
 Supervised learning is a type of machine learning where the algorithm is trained on a labeled dataset. This means that for every input data, there is a corresponding label or output value associated with it. The algorithm makes predictions or decisions based on this input-output mapping which it learns during the training phase. Once the training is complete, the algorithm can be used to predict output values for new, unseen data. Common algorithms used in supervised learning include linear regression for regression problems and support vector machines, and neural networks for classification problems. Some popular applications of supervised learning include predicting house prices based on various features like size and location, and classifying emails as spam or not spam.
@@ -79,32 +79,32 @@ A neural network consists of layers of interconnected neurons. Each neuron in a 
 
 \subsubsection{Feedforward Neural Networks}
 
-Feedforward neural networks are the simplest type of neural network architecture where the data flows in a single direction from the input layer to the output layer, without any cycles or loops. Each neuron in a layer is connected to every neuron in the previous layer. Feedforward networks are widely used for pattern recognition and are well-suited for mapping input patterns to output patterns.
+Feedforward neural networks are the simplest type of neural network architecture where the data flows in a single direction from the input layer to the output layer, without any cycles or loops. Each neuron in a layer is connected to every neuron in the previous layer. Feedforward networks are widely used for pattern recognition and are well-suited for mapping input patterns to output patterns \cite[p. 93 f.]{ketkar21}.
 
 \subsubsection{Backpropagation Algorithm}
 
-Backpropagation, short for "backward propagation of errors", is a critical algorithm for training neural networks, particularly feedforward neural networks. It is used to minimize the error in the network's predictions by iteratively adjusting the weights and biases. The backpropagation algorithm involves two main phases: the forward pass, where the input is passed through the network to compute the output, and the backward pass, where the gradient of the error with respect to each weight is computed. This gradient information is then used to update the weights in the network to reduce the error.
+Backpropagation, short for ''backward propagation of errors'', is a critical algorithm for training neural networks, particularly feedforward neural networks. It is used to minimize the error in the network's predictions by iteratively adjusting the weights and biases. The backpropagation algorithm involves two main phases: the forward pass, where the input is passed through the network to compute the output, and the backward pass, where the gradient of the error with respect to each weight is computed. This gradient information is then used to update the weights in the network to reduce the error \cite[p. 113 ff.]{ketkar21}.
 
 
 \section{PyTorch Introduction}
 
-PyTorch is an open-source deep learning library developed by Facebook's AI Research lab. It is popular among researchers and developers due to its ease of use, flexibility, and efficient memory usage. PyTorch facilitates the development of deep learning models with its rich set of modules and functionalities. Additionally, PyTorch supports GPU acceleration which can significantly increase the speed of computationally intensive tasks in deep learning.
+PyTorch is an open-source deep learning library developed by Facebook's AI Research lab. It is popular among researchers and developers due to its ease of use, flexibility, and efficient memory usage. PyTorch facilitates the development of deep learning models with its rich set of modules and functionalities. Additionally, PyTorch supports GPU acceleration which can significantly increase the speed of computationally intensive tasks in deep learning \cite[p. 28 ff.]{ketkar21}.
 
 \subsection{Tensors in PyTorch}
 
 Tensors are the fundamental data structures in PyTorch, which generalize the concept of scalars, vectors, and matrices to an arbitrary number of dimensions. They play an important role in building and training deep learning models, as they represent inputs, outputs, and parameters. PyTorch tensors are optimized for GPU processing, which is highly beneficial for computationally intensive tasks.
 
-Creating tensors can be done in multiple ways, such as converting from data like lists or NumPy arrays, or by initializing empty tensors of specific sizes and data types. Furthermore, PyTorch boasts a comprehensive set of operations to manipulate tensors, encompassing arithmetic, linear algebra, matrix manipulation, and sampling, among others. These operations are fundamental for the mathematical computations required in deep learning.
+Creating tensors can be done in multiple ways, such as converting from data like lists or NumPy arrays, or by initializing empty tensors of specific sizes and data types. Furthermore, PyTorch boasts a comprehensive set of operations to manipulate tensors, encompassing arithmetic, linear algebra, matrix manipulation, and sampling, among others. These operations are fundamental for the mathematical computations required in deep learning \cite[Tensors]{pytorch_tutorial}.
 
 \subsection{Datasets and Dataloaders}
 
 Datasets and data loaders are crucial components in data processing and model training in PyTorch. A dataset in PyTorch is an object that contains the data, such as images and labels, which are used for training or testing a model. Dataloaders, on the other hand, efficiently load data from a dataset and offer an easy way to iterate over samples, which is especially helpful for large datasets.
 
-PyTorch provides built-in datasets and data loaders for common tasks like image classification, text analysis, and audio processing. Moreover, users can create custom datasets and data loaders for specific data sources.
+PyTorch provides built-in datasets and data loaders for common tasks like image classification, text analysis, and audio processing. Moreover, users can create custom datasets and data loaders for specific data sources \cite[Datasets and DataLoaders]{pytorch_tutorial}.
 
 \subsection{Transforms}
 
-Data transformation is often necessary to condition the data into a suitable form for training deep learning models. PyTorch's \verb|torchvision.transforms| module provides several common transforms out of the box. Additionally, all TorchVision datasets have two parameters - \verb|transform| to modify the features and \verb|target_transform| to modify the labels - that accept callables containing the transformation logic.
+Data transformation is often necessary to condition the data into a suitable form for training deep learning models. PyTorch's \verb|torchvision.transforms| module provides several common transforms out of the box. Additionally, all TorchVision datasets have two parameters - \verb|transform| to modify the features and \verb|target_transform| to modify the labels - that accept callables containing the transformation logic \cite[Transforms]{pytorch_tutorial}.
 
 \subsection{Building a Neural Network with PyTorch}
 
@@ -114,25 +114,25 @@ To define a neural network in PyTorch, one needs to subclass \verb|nn.Module| an
 
 Neural networks often have parameterized layers, meaning they have associated weights and biases that are optimized during training. These parameters are automatically tracked when a model object subclasses \verb|nn.Module|.
 
-The last linear layer of a neural network usually returns logits, which are raw values ranging from negative infinity to infinity. These logits are then fed through a softmax function to produce probabilities that sum to 1 across specified dimensions.
+The last linear layer of a neural network usually returns logits, which are raw values ranging from negative infinity to infinity. These logits are then fed through a softmax function to produce probabilities that sum to 1 across specified dimensions \cite[Build Model]{pytorch_tutorial}.
 
 \subsection{Automatic Differentiation with torch.autograd}
 
 PyTorch provides a built-in differentiation engine called \verb|torch.autograd|. It supports automatic computation of gradients for any computational graph. It is a powerful tool that eases the computation of gradients for neural networks, which is essential for the optimization of the weights.
 
-In practice, you only need to declare which tensors you want gradients for by setting \verb|requires_grad=True|. After computing the loss, calling \verb|loss.backward()| will compute the gradients for all tensors with \verb|requires_grad=True|. These gradients are accumulated in the \verb|.grad| attribute of the respective tensors.
+In practice, you only need to declare which tensors you want gradients for by setting \verb|requires_grad=True|. After computing the loss, calling \verb|loss.backward()| will compute the gradients for all tensors with \verb|requires_grad=True|. These gradients are accumulated in the \verb|.grad| attribute of the respective tensors \cite[Automatic Differentiation]{pytorch_tutorial}.
 
 \subsection{Training the Network}
 
 Training a neural network involves iterating over the training data, and for each batch, performing forward and backward passes through the network, computing the loss and updating the weights using an optimization algorithm such as Stochastic Gradient Descent (SGD).
 
-During training, the data is passed through the network (forward pass), and a loss is calculated reflecting how far the network's output is from the ground truth. The gradients of this loss with respect to the network's weights are computed, and the optimizer uses these gradients to update the weights (backward pass).
+During training, the data is passed through the network (forward pass), and a loss is calculated reflecting how far the network's output is from the ground truth. The gradients of this loss with respect to the network's weights are computed, and the optimizer uses these gradients to update the weights (backward pass) \cite[Optimization Loop]{pytorch_tutorial}.
 
 \subsection{Saving and Loading Models}
 
 Once a model has been trained, it is possible to save its parameters to a file. This is useful for reusing models, sharing them, or deploying them in production environments. In PyTorch, you can use \verb|torch.save()| to save a model's state dictionary, and \verb|torch.load()| to load the state dictionary into a model's architecture.
 
-This process allows for the preservation and later restoration of models, facilitating continuity in research and development, as well as the deployment of machine learning models into production environments.
+This process allows for the preservation and later restoration of models, facilitating continuity in research and development, as well as the deployment of machine learning models into production environments \cite[Save, Load and Use Model]{pytorch_tutorial}.
 
 
 \section{Understanding Ball Bearings}

@@ -124,7 +124,7 @@ def split_train_features_targets(train_data, val_data):
 
 \subsection*{Setting Up the Model}
 
-The neural network is instantiated with an input size of 2 (corresponding to the two features, Fr and n), a hidden layer size of 200, and an output size of 10 (corresponding to the number of bins for the target variable, Lifetime). The activation function used in the hidden layer is \ac{relu}. \ac{relu} is a popular choice for an activation function because it helps in mitigating the vanishing gradient problem and is computationally efficient.
+The neural network is instantiated with an input size of 2 (corresponding to the two features, Fr and n), a hidden layer size of 200, and an output size of 10 (corresponding to the number of bins for the target variable, Lifetime). The activation function used in the hidden layer is \ac{relu}. \ac{relu} is a popular choice for an activation function because it helps in mitigating the vanishing gradient problem and is computationally efficient \cite[p. 111]{ketkar21}.
 
 \begin{verbatim}
 class LifetimeModel(nn.Module):
@@ -235,7 +235,7 @@ After training the model, it is essential to evaluate its performance on unseen 
 
 \subsubsection{Overall Accuracy}
 
-The overall accuracy provides a rough estimate of the model's performance by calculating the percentage of correct predictions. In this particular case, the model achieved an accuracy of 96.7\%, with 264 out of 273 predictions being correct on the test dataset. However, overall accuracy doesn't provide detailed information about the nature of the mistakes made by the model.
+The overall accuracy provides a rough estimate of the model's performance by calculating the percentage of correct predictions. In this particular case, the model achieved an accuracy of 96.7\%, with 264 out of 273 predictions being correct on the test dataset. However, overall accuracy doesn't provide detailed information about the nature of the mistakes made by the model \cite[p. 148 ff.]{ketkar21}.
 
 \subsubsection{Confusion Matrix}
 
