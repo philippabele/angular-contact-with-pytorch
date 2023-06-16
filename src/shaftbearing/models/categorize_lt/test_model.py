@@ -25,7 +25,7 @@ def load_model():
     return model
 
 
-def test_model(model, test_dataloader, evaluation_function):
+def test_model(model, test_dataloader, evaluation_function, output_size):
     model.eval()
     all_predictions = []
     all_targets = []
@@ -36,7 +36,7 @@ def test_model(model, test_dataloader, evaluation_function):
             all_predictions.extend(predicted.numpy())
             all_targets.extend(targets.numpy())
     
-    score = evaluation_function(all_targets, all_predictions)
+    score = evaluation_function(all_targets, all_predictions, output_size)
     return score
 
 
