@@ -153,7 +153,7 @@ This hypothesis serves as a benchmark and starting point for our model. To asses
 The relative error was calculated as follows:
 
 \begin{equation}
-\text{relative error} = \left(\frac{\text{actual Lifetime}}{\text{predicted Lifetime}}\right) - 1
+\text{relative error} = \left(\frac{\text{dataset Lifetime}}{\text{equation Lifetime}}\right) - 1
 \end{equation}
 
 This calculation provides a normalized measure of how the predicted Lifetime deviates from the actual Lifetime in the dataset.
@@ -163,7 +163,7 @@ The mean of the relative error is \(4.56 \cdot 10^{-12}\), very close to zero, a
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{assets/bearings-eda/3dplot-error.png}
-    \caption{3D plot showing the relative error between the actual \(Lifetime\) and the predicted values from our function in \(10^{-10}\).}
+    \caption{3D plot showing the relative error between the Lifetime of the dataset and our function in \(10^{-10}\).}
     \label{fig:bearings-error}
 \end{figure}
 

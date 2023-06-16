@@ -1,0 +1,26 @@
+\chapter{Summary}
+\label{sec:diskussion}
+
+\section{Overview and Methodology}
+This research embarked on an investigative journey to explore the potential of machine learning for predictive maintenance of ball bearings. It began with a thorough \ac{eda} which proved invaluable for unveiling patterns and relationships within the dataset. Through this analysis, the research was able to discern the equation for calculating the Lifetime, which served as a cornerstone for generating an artificial dataset. The ability to expand the dataset allowed for richer experimentation and benchmarking of the model developed.
+
+PyTorch was employed as the deep learning framework for developing the neural network model. Its flexibility and rich feature set expedited the development process. The model's architecture was designed to categorize ball bearings based on their anticipated lifetime.
+
+Grid search was instrumental in examining the impact of various hyperparameters on the model's performance. By systematically adjusting hyperparameters and evaluating the model's Mean Squared Error, the analysis offered valuable insights into the hyperparameters' effects on the model's accuracy.
+
+TensorBoard was used in conjunction with calculating averages for a clearer understanding of the hyperparameter effects. The combination of visualizations and calculated averages offered an in-depth perspective on how different hyperparameters influenced the model's performance.
+
+\section{Findings, Contributions and Implications}
+The research demonstrated that machine learning holds promise in the predictive maintenance of ball bearings. Particularly, it showed that neural networks are adept at categorizing ball bearings according to their expected lifetime. Such categorization can be invaluable for identifying bearings that are nearing the end of their lifecycle and thus mitigate the risk of mechanical failures.
+
+This work contributes to the domain of predictive maintenance by highlighting the applicability of deep learning methods for lifetime prediction of ball bearings. The potential for enhancing operational efficiency and effectuating cost savings through predictive maintenance is profound. Industries relying on heavy machinery can leverage these insights for timely maintenance activities, thus reducing downtime and prolonging the lifespan of equipment.
+
+Additionally, this research provides a blueprint for developing, tuning, and evaluating neural network models for predictive maintenance applications. It showcases the significance of hyperparameter tuning and provides a basis for decision-making regarding neural network architecture and training configurations.
+
+\section{Limitations and Recommendations}
+While the research findings are encouraging, it is imperative to recognize the limitations inherent in using an artificially generated dataset. The real-world performance of the developed model remains to be tested, and as such, its efficacy in practical scenarios is not yet established.
+
+Future research should focus on testing and validating the model using real-world datasets. This would help ascertain its robustness and adaptability to the complexities and variations inherent in actual operational environments. Furthermore, exploring alternative machine learning approaches besides categorization and comparing their performance can be enlightening. Additionally, experimentation with different neural network architectures and ensemble methods may yield improved models that are better suited for predictive maintenance in specific industrial settings.
+
+\section{Closing Statement}
+This research undertook the formidable task of investigating the application of machine learning in predictive maintenance for ball bearings. Through diligent efforts in data analysis, model development, and hyperparameter tuning, it has offered valuable insights and advanced the knowledge base in this domain. The findings hold implications for both industrial applications and future research in predictive maintenance. It is the hope that this work will inspire further research and innovation in predictive maintenance technologies, ultimately leading to safer and more efficient industrial operations, and contribute to the broader goal of advancing machine learning applications in various fields.

@@ -57,7 +57,7 @@ Using the score as an evaluation metric, the script is capable of comparing diff
 
 To perform a thorough analysis of how hyperparameters influence the neural network model's performance, the results of the grid search experiments are both logged for visualization and statistically evaluated.
 
-TensorBoard is employed to log and provide an interactive visualization of the experiments' results. It is instrumental in creating plots that display the relationships between hyperparameters and the mean squared error, making it easier to identify trends or patterns in how the hyperparameters influence model performance. TensorBoard’s capabilities for simultaneous examination of multiple experiments and tracking the evolution of evaluation metrics over time are highly beneficial.
+TensorBoard is employed to log and provide an interactive visualization of the experiments' results. It is instrumental in creating plots that display the relationships between hyperparameters and the mean squared error, making it easier to identify trends or patterns in how the hyperparameters influence model performance. TensorBoard's capabilities for simultaneous examination of multiple experiments and tracking the evolution of evaluation metrics over time are highly beneficial.
 
 In tandem with using TensorBoard for visualization, a statistical evaluation is conducted by calculating the averages of the mean squared error for each value of each hyperparameter across all experiments sharing the same value for a given hyperparameter. This approach isolates the effect of each hyperparameter, enabling a focused analysis of how variations in a single hyperparameter impact the model's performance.
 
@@ -112,7 +112,7 @@ In this chapter, an extensive analysis was performed to understand the influence
 The key takeaways from this analysis are:
 
 \begin{itemize}
-    \item A smaller output size tends to perform better. However, it is important to consider the practical implications of this choice, as having too few bins may limit the model’s ability to provide sufficiently granular predictions.
+    \item A smaller output size tends to perform better. However, it is important to consider the practical implications of this choice, as having too few bins may limit the model's ability to provide sufficiently granular predictions.
     
     \item A larger hidden size generally improves the model's performance, but this comes with increased complexity and computational cost.
     
