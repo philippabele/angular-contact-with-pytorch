@@ -1,57 +1,15 @@
-Chapter 2: Basics
-2.1 Machine Learning Overview
-Definition of Machine Learning
-Types of Machine Learning
-Supervised Learning
-Unsupervised Learning
-Reinforcement Learning
-Typical Workflow in Machine Learning
-Use Cases and Applications of Machine Learning
-Challenges in Machine Learning
-Overfitting and Underfitting
-Bias-Variance Tradeoff
-Data Quality
-Introduction to Neural Networks
-Basic Concepts: Neurons, Weights, Activation Functions
-Feedforward Neural Networks
-Backpropagation Algorithm
-2.2 PyTorch Introduction
-Introduction to PyTorch
-Tensors in PyTorch
-Creating Tensors
-Operations on Tensors
-Autograd: Automatic Differentiation
-Building a Simple Neural Network with PyTorch
-Defining the Network Architecture
-Loss Function and Optimizers
-Training the Network
-Saving and Loading Models
-PyTorch vs Other Deep Learning Libraries (e.g., TensorFlow)
-2.3 Understanding Ball Bearings
-Introduction to Ball Bearings
-Components of Ball Bearings
-Functions and Applications of Ball Bearings
-Common Parameters and Metrics in Ball Bearing Systems
-Fr (Radial Load)
-n (Rotational Speed)
-Lifetime
-Factors Influencing Ball Bearing Performance
-Failure Modes of Ball Bearings
-Importance of Predicting Ball Bearing Lifetime
-
-
 \chapter{Basics}
 \label{sec:basics}
 
 \section{Machine Learning Overview}
 
-Machine learning is a subfield of \ac{ai} that empowers systems with the ability to automatically learn and improve from experience. Rather than relying on explicit programming, these systems develop programs by using patterns and inferences from data. Machine learning has been one of the most exciting advancements in the field of artificial intelligence and is extensively being used to develop algorithms that can crunch through large data to produce models that can process individual samples. They are particularly good at recognizing patterns which is essential for decision making and predictions.
+Machine learning is a branch of Artificial Intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Essentially, machine learning involves the creation of algorithms that can learn from and make decisions or predictions based on data. These algorithms work by discovering patterns and insights from data, which is particularly beneficial for decision-making and predictions.
 
-One of the classic definitions, by Tom Mitchell, succinctly captures the goal of machine learning: ''A computer program is said to learn from experience E with respect to some task T and some performance measure P, if its performance on T, as measured by P, improves with experience E'' \cite[2]{mitchell1997machine}.
+Tom Mitchell provides a classic definition that captures the essence of machine learning: "A computer program is said to learn from experience E with respect to some task T and some performance measure P, if its performance on T, as measured by P, improves with experience E" \cite[2]{mitchell1997machine}.
 
-The applications of machine learning are extensive. With the massive amounts of data being generated, there is a need to make better use of it. In business, it is being used for credit fraud detection and customer insights. In healthcare, it is used for identifying trends that could improve diagnoses and patient treatment. And in technology, it can be used to expand the capabilities of AI and continually improve the algorithms used in analytics for apps. It is the driving force behind the innovations that improve efficiencies and affect our day-to-day lives.
+The range of applications for machine learning is extensive, making it an indispensable tool in numerous fields. With today's enormous amounts of data, machine learning is instrumental in harnessing this data for practical use. For instance, in business, it is employed to detect fraudulent activities and gain customer insights. In healthcare, it plays a vital role in identifying trends for improved diagnoses and treatments. Moreover, in the technology sector, it helps refine algorithms and expand the capabilities of AI systems.
 
-Machine learning is particularly good at recognizing patterns and making predictions. This is achieved by processing data and producing a model that can infer from new data. The accuracy of the inference is highly dependent on the quality of data and the algorithm. This is a field that is continuously evolving and is heavily researched.
+Machine learning excels in identifying patterns within data and making predictions based on these patterns. It involves processing data and generating a model that can make inferences from new, unseen data. The accuracy and reliability of these inferences are highly dependent on the quality of the data and the effectiveness of the algorithm used. As a constantly evolving field, machine learning is at the forefront of technological innovation and continues to grow through active research and development.
 
 
 \subsection{Types of Machine Learning}
@@ -116,7 +74,7 @@ A neural network consists of layers of interconnected neurons. Each neuron in a 
     
     \item \textbf{Weights:} These are the values that control the strength and direction of the connection between two neurons. Weights are learned and adjusted during the training process.
     
-    \item \textbf{Activation Functions:} These functions introduce non-linearities into the network. Common activation functions include the sigmoid, hyperbolic tangent (tanh), and Rectified Linear Unit (ReLU).
+    \item \textbf{Activation Functions:} These functions introduce non-linearities into the network. Common activation functions include the sigmoid, \ac{tanh}, and \ac{relu}.
 \end{itemize}
 
 \subsubsection{Feedforward Neural Networks}
@@ -146,23 +104,23 @@ PyTorch provides built-in datasets and data loaders for common tasks like image 
 
 \subsection{Transforms}
 
-Data transformation is often necessary to condition the data into a suitable form for training deep learning models. PyTorch's `torchvision.transforms` module provides several common transforms out of the box. Additionally, all TorchVision datasets have two parameters - `transform` to modify the features and `target\_transform` to modify the labels - that accept callables containing the transformation logic.
+Data transformation is often necessary to condition the data into a suitable form for training deep learning models. PyTorch's \verb|torchvision.transforms| module provides several common transforms out of the box. Additionally, all TorchVision datasets have two parameters - \verb|transform| to modify the features and \verb|target_transform| to modify the labels - that accept callables containing the transformation logic.
 
 \subsection{Building a Neural Network with PyTorch}
 
-PyTorch offers all the building blocks necessary to construct a neural network. Neural networks are made of layers that perform operations on data. In PyTorch, every module subclasses the `nn.Module`. A neural network is itself a module that comprises other modules (layers). 
+PyTorch offers all the building blocks necessary to construct a neural network. Neural networks are made of layers that perform operations on data. In PyTorch, every module subclasses the \verb|nn.Module|. A neural network is itself a module that comprises other modules (layers). 
 
-To define a neural network in PyTorch, one needs to subclass `nn.Module` and initialize the neural network layers in the constructor. The `forward` method is then implemented, which conducts operations on input data.
+To define a neural network in PyTorch, one needs to subclass \verb|nn.Module| and initialize the neural network layers in the constructor. The \verb|forward| method is then implemented, which conducts operations on input data.
 
-Neural networks often have parameterized layers, meaning they have associated weights and biases that are optimized during training. These parameters are automatically tracked when a model object subclasses `nn.Module`.
+Neural networks often have parameterized layers, meaning they have associated weights and biases that are optimized during training. These parameters are automatically tracked when a model object subclasses \verb|nn.Module|.
 
 The last linear layer of a neural network usually returns logits, which are raw values ranging from negative infinity to infinity. These logits are then fed through a softmax function to produce probabilities that sum to 1 across specified dimensions.
 
 \subsection{Automatic Differentiation with torch.autograd}
 
-PyTorch provides a built-in differentiation engine called `torch.autograd`. It supports automatic computation of gradients for any computational graph. It is a powerful tool that eases the computation of gradients for neural networks, which is essential for the optimization of the weights.
+PyTorch provides a built-in differentiation engine called \verb|torch.autograd|. It supports automatic computation of gradients for any computational graph. It is a powerful tool that eases the computation of gradients for neural networks, which is essential for the optimization of the weights.
 
-In practice, you only need to declare which tensors you want gradients for by setting `requires\_grad=True`. After computing the loss, calling `loss.backward()` will compute the gradients for all tensors with `requires\_grad=True`. These gradients are accumulated in the `.grad` attribute of the respective tensors.
+In practice, you only need to declare which tensors you want gradients for by setting \verb|requires_grad=True|. After computing the loss, calling \verb|loss.backward()| will compute the gradients for all tensors with \verb|requires_grad=True|. These gradients are accumulated in the \verb|.grad| attribute of the respective tensors.
 
 \subsection{Training the Network}
 
@@ -172,6 +130,62 @@ During training, the data is passed through the network (forward pass), and a lo
 
 \subsection{Saving and Loading Models}
 
-Once a model has been trained, it is possible to save its parameters to a file. This is useful for reusing models, sharing them, or deploying them in production environments. In PyTorch, you can use `torch.save()` to save a model's state dictionary, and `torch.load()` to load the state dictionary into a model's architecture.
+Once a model has been trained, it is possible to save its parameters to a file. This is useful for reusing models, sharing them, or deploying them in production environments. In PyTorch, you can use \verb|torch.save()| to save a model's state dictionary, and \verb|torch.load()| to load the state dictionary into a model's architecture.
 
 This process allows for the preservation and later restoration of models, facilitating continuity in research and development, as well as the deployment of machine learning models into production environments.
+
+
+\section{Understanding Ball Bearings}
+
+Ball bearings are mechanical devices that reduce rotational friction and support radial and axial loads. They achieve this by using rolling elements, such as balls, to maintain the separation between the bearing races. This separation minimizes surface contact between the moving parts, thus reducing friction. Ball bearings are vital components in a wide array of machinery and equipment.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{assets/ball-bearings.jpg}
+    \caption{A typical ball bearing}
+    \label{fig:ball_bearing}
+\end{figure}
+
+\subsection{Components of Ball Bearings}
+
+A typical ball bearing is composed of several fundamental components, including the inner race, the outer race, balls, and a cage. The inner race is a ring that fits tightly on the shaft and has a path on which the balls roll. This race is essential as it rotates with the motion of the shaft. On the other hand, the outer race is similar to the inner race but is larger and remains stationary. It is mounted in the housing and also has a track on which the balls roll. 
+
+The balls themselves are the critical rolling elements within the bearing. These spherical components carry the load and reduce friction as they spin between the inner and outer races. Their smooth surface and round shape are crucial for the free rotation and the distribution of weight.
+
+Another significant component is the cage, sometimes referred to as a retainer. The cage's primary role is to keep the balls evenly spaced around the bearing, preventing them from coming into contact with each other during operation, which could lead to damage or increased friction.
+
+In addition to these primary components, some ball bearings may also include shields and seals. These optional elements are especially useful in environments where contamination from dirt or other particles is a concern, or where there is a need to retain lubricant within the bearing. Shields are generally metal and form a barrier on one or both sides of the bearing, while seals are usually made of rubber and provide a tighter seal to keep out contaminants and hold in lubrication. Both shields and seals contribute to prolonging the bearing's life and maintaining its performance.
+
+\subsection{Functions and Applications of Ball Bearings}
+
+Ball bearings have two primary functions: first, they reduce friction, which is critical for ensuring the smooth rotation of mechanical parts. Second, they support loads, which enables them to sustain both forces perpendicular to the axis of rotation (radial loads) and forces parallel to the axis (axial loads).
+
+In terms of applications, ball bearings are highly versatile. They are found in automotive industry components, including car and truck axles, wheels, and engine parts. In aerospace, they are essential in aircraft engines and systems. Industrial machinery, including motors, pumps, and conveyors, employ ball bearings for efficient operation. Additionally, consumer electronics such as hard drives, DVD players, and fans use ball bearings.
+
+
+\subsection{Calculating the Lifetime of Ball Bearings}
+
+Knowing the expected lifetime of ball bearings is essential for minimizing equipment downtime, ensuring reliability, and planning maintenance schedules and budgets. The lifetime of ball bearings depends on the load they bear and the operating conditions. The ISO standard (DIN ISO 281) provides guidelines for calculating the lifetime of ball bearings, differentiating between static and dynamic load capacities.
+
+\subsubsection{Static Load Capacity}
+A ball bearing experiences static load when it is either stationary or moving at very low speeds (less than 10 \ac{rpm}). The static load capacity concerns the maximum load that a bearing can sustain without incurring permanent deformation affecting its function. The static load capacity is calculated using the formula:
+\begin{equation}
+S_{0} = \frac{C_{0}}{P_{0}},
+\end{equation}
+where \(S_{0}\) is the static load safety factor, \(C_{0}\) is the static load rating, and \(P_{0}\) is the equivalent static bearing load.
+
+\subsubsection{Dynamic Load Capacity}
+Dynamic load capacity pertains to a bearing's ability to endure loads while rotating at operational speeds. The lifetime is influenced by fatigue, with the end of life considered when the first signs of material fatigue such as flaking, pitting, or cracks appear on the raceways or balls. The ISO standard defines \(L_{10}\) life as the number of revolutions at which 90\% of a group of identical bearings remain operational. The dynamic load capacity is expressed using the formula:
+\begin{equation}
+\text{for ball bearings,} \quad L_{10} = \left(\frac{C}{P}\right)^3,
+\end{equation}
+\begin{equation}
+\text{for roller bearings,} \quad L_{10} = \left(\frac{C}{P}\right)^\frac{10}{3},
+\end{equation}
+where \(L_{10}\) is the bearing life in millions of revolutions, \(C\) is the dynamic load rating, and \(P\) is the equivalent dynamic bearing load. The life in hours (\(L_{10h}\)) is given by:
+\begin{equation}
+L_{10h} = \frac{10^6}{60 \cdot n} \cdot L_{10},
+\end{equation}
+where \(n\) is the rotational speed in \ac{rpm}.
+
+In real-world applications, not all bearings reach the calculated life due to factors such as contamination, poor lubrication, or misalignment. The life calculated is a statistical measure, and in practice, some bearings may fail earlier while others last longer.
