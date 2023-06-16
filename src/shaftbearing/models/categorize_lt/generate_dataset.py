@@ -34,4 +34,5 @@ def generate_dataset(fr_range, n_range, fr_interval, n_interval, output_path, sa
         print(f'Dataset generated and saved to {output_path}')
     return df
 
-# generate_dataset(fr_range, n_range, fr_interval, n_interval, output_path, save_to_file=True)
+if __name__ == '__main__':
+    generate_dataset(fr_range, n_range, fr_interval, n_interval, output_path, save_to_file=True)

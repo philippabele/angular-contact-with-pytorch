@@ -70,12 +70,13 @@ def test_model_matrix(model, test_dataloader):
     plt.show()
 
 
-# test_data = load_test_data(config['test_data_path'])
-# test_features, test_targets = split_test_features_targets(test_data)
-# model = load_model()
+if __name__ == '__main__':
+    test_data = load_test_data(config['test_data_path'])
+    test_features, test_targets = split_test_features_targets(test_data)
+    model = load_model()
 
-# # Create DataLoader for the test dataset
-# test_dataset = BearingDataset(test_features, test_targets)
-# test_dataloader = DataLoader(test_dataset, batch_size=config["batch_size"], shuffle=False)
+    # Create DataLoader for the test dataset
+    test_dataset = BearingDataset(test_features, test_targets)
+    test_dataloader = DataLoader(test_dataset, batch_size=config["batch_size"], shuffle=False)
 
-# test_model_matrix(model, test_dataloader)
+    test_model_matrix(model, test_dataloader)

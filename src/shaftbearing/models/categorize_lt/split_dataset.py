@@ -56,7 +56,7 @@ def split_and_transform_dataset(data, save_to_file=False):
         save_data(train_data, val_data, test_data)
     return train_data, val_data, test_data
 
-
-# print('Loading data from csv file...')
-# data = pd.read_csv(config["dataset_path"])
-# split_and_transform_dataset(data, save_to_file=True)
+if __name__ == '__main__':
+    print('Loading data from csv file...')
+    data = pd.read_csv(config["dataset_path"])
+    split_and_transform_dataset(data, save_to_file=True)

@@ -56,34 +56,36 @@ def train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, epo
     training_time = time.time() - start_time
     print(f'Training took {training_time:.2f} seconds')
 
-# # Load data
-# train_data, val_data = load_train_data(config["train_data_path"], config["val_data_path"])
-# train_features, train_targets, val_features, val_targets = split_train_features_targets(train_data, val_data)
 
-# # Check if CUDA is available and set the device
-# device = torch.device("cuda" if torch.cuda.is_available() and prefer_cuda else "cpu")
-# print(f'Using device: {device}')
+if __name__ == '__main__':
+    # Load data
+    train_data, val_data = load_train_data(config["train_data_path"], config["val_data_path"])
+    train_features, train_targets, val_features, val_targets = split_train_features_targets(train_data, val_data)
 
-# # Initialize model
-# model = LifetimeModel(config["input_size"], config["hidden_size"], config["output_size"], config["activation_function"])
-# if load_model and os.path.exists(config["model_path"]):
-#     print('Loading model from file...')
-#     model.load_state_dict(torch.load(config["model_path"]))
-# model.to(device)
+    # Check if CUDA is available and set the device
+    device = torch.device("cuda" if torch.cuda.is_available() and prefer_cuda else "cpu")
+    print(f'Using device: {device}')
 
-# train_dataset = BearingDataset(train_features, train_targets)
-# val_dataset = BearingDataset(val_features, val_targets)
+    # Initialize model
+    model = LifetimeModel(config["input_size"], config["hidden_size"], config["output_size"], config["activation_function"])
+    if load_model and os.path.exists(config["model_path"]):
+        print('Loading model from file...')
+        model.load_state_dict(torch.load(config["model_path"]))
+    model.to(device)
 
-# # Creating PyTorch DataLoaders
-# train_dataloader = DataLoader(train_dataset, batch_size=config["batch_size"], shuffle=True, pin_memory=True)
-# val_dataloader = DataLoader(val_dataset, batch_size=config["batch_size"], shuffle=True, pin_memory=True)
+    train_dataset = BearingDataset(train_features, train_targets)
+    val_dataset = BearingDataset(val_features, val_targets)
 
-# # Optimizer and Loss Function
-# optimizer = torch.optim.Adam(model.parameters(), lr=config["learning_rate"])
-# loss_fn = nn.CrossEntropyLoss()
+    # Creating PyTorch DataLoaders
+    train_dataloader = DataLoader(train_dataset, batch_size=config["batch_size"], shuffle=True, pin_memory=True)
+    val_dataloader = DataLoader(val_dataset, batch_size=config["batch_size"], shuffle=True, pin_memory=True)
 
-# train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, config["epochs"], device)
+    # Optimizer and Loss Function
+    optimizer = torch.optim.Adam(model.parameters(), lr=config["learning_rate"])
+    loss_fn = nn.CrossEntropyLoss()
 
-# # Save the model after training
-# if save_model:
-#     torch.save(model.state_dict(), config["model_path"])
+    train_model(train_dataloader, val_dataloader, model, loss_fn, optimizer, config["epochs"], device)
+
+    # Save the model after training
+    if save_model:
+        torch.save(model.state_dict(), config["model_path"])
