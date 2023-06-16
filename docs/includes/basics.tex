@@ -128,57 +128,50 @@ Feedforward neural networks are the simplest type of neural network architecture
 Backpropagation, short for "backward propagation of errors", is a critical algorithm for training neural networks, particularly feedforward neural networks. It is used to minimize the error in the network's predictions by iteratively adjusting the weights and biases. The backpropagation algorithm involves two main phases: the forward pass, where the input is passed through the network to compute the output, and the backward pass, where the gradient of the error with respect to each weight is computed. This gradient information is then used to update the weights in the network to reduce the error.
 
 
-\section{PyTorch}
-\subsection{Tensors}
+\section{PyTorch Introduction}
 
-Tensors are a powerful data structure used in PyTorch to represent and manipulate multi-dimensional arrays.
-They are similar to arrays and matrices, but have additional features optimized for use in deep learning applications.
-Tensors can be used to represent inputs, outputs, and parameters of a model, and can be run on GPUs or other hardware accelerators for faster processing.
-They are designed to support automatic differentiation, a crucial aspect of training deep learning models.
-Tensors can be created from data or NumPy arrays and have attributes that describe their shape, datatype, and device location.
-With over 100 available tensor operations in PyTorch, including arithmetic, linear algebra, matrix manipulation, and sampling, they provide a flexible and efficient way to perform a wide range of mathematical operations required in deep learning.
+PyTorch is an open-source deep learning library developed by Facebook's AI Research lab. It is popular among researchers and developers due to its ease of use, flexibility, and efficient memory usage. PyTorch facilitates the development of deep learning models with its rich set of modules and functionalities. Additionally, PyTorch supports GPU acceleration which can significantly increase the speed of computationally intensive tasks in deep learning.
 
+\subsection{Tensors in PyTorch}
 
-\subsection{Datasets \& Dataloaders}
+Tensors are the fundamental data structures in PyTorch, which generalize the concept of scalars, vectors, and matrices to an arbitrary number of dimensions. They play an important role in building and training deep learning models, as they represent inputs, outputs, and parameters. PyTorch tensors are optimized for GPU processing, which is highly beneficial for computationally intensive tasks.
 
-Datasets and data loaders are two important concepts for data processing and model training in PyTorch.
-A dataset in PyTorch is an object that holds the data, such as images and labels, that will be used for training or testing a model.
-On the other hand, a data loader is an object that can efficiently load data from a dataset and provide a convenient way to iterate over the samples.
-PyTorch provides built-in datasets and data loaders for common tasks, such as image classification, text analysis, and audio processing.
-Alternatively, one can create custom datasets and data loaders for their own data sources.
+Creating tensors can be done in multiple ways, such as converting from data like lists or NumPy arrays, or by initializing empty tensors of specific sizes and data types. Furthermore, PyTorch boasts a comprehensive set of operations to manipulate tensors, encompassing arithmetic, linear algebra, matrix manipulation, and sampling, among others. These operations are fundamental for the mathematical computations required in deep learning.
 
+\subsection{Datasets and Dataloaders}
+
+Datasets and data loaders are crucial components in data processing and model training in PyTorch. A dataset in PyTorch is an object that contains the data, such as images and labels, which are used for training or testing a model. Dataloaders, on the other hand, efficiently load data from a dataset and offer an easy way to iterate over samples, which is especially helpful for large datasets.
+
+PyTorch provides built-in datasets and data loaders for common tasks like image classification, text analysis, and audio processing. Moreover, users can create custom datasets and data loaders for specific data sources.
 
 \subsection{Transforms}
 
-Transforms are used in machine learning to manipulate data and make it suitable for training.
-In PyTorch, all TorchVision datasets have two parameters - transform to modify the features and target\_transform to modify the labels - that accept callables containing the transformation logic.
-The torchvision.transforms module offers several commonly used transforms out of the box.
+Data transformation is often necessary to condition the data into a suitable form for training deep learning models. PyTorch's `torchvision.transforms` module provides several common transforms out of the box. Additionally, all TorchVision datasets have two parameters - `transform` to modify the features and `target\_transform` to modify the labels - that accept callables containing the transformation logic.
 
+\subsection{Building a Neural Network with PyTorch}
 
-\subsection{Neural Networks}
-Neural networks are made up of layers that perform operations on data.
-PyTorch provides all the building blocks needed to build a neural network.
-Every module in PyTorch subclasses the nn.Module.
-A neural network is a module itself that consists of other modules (layers).
-This nested structure allows for building and managing complex architectures easily.
+PyTorch offers all the building blocks necessary to construct a neural network. Neural networks are made of layers that perform operations on data. In PyTorch, every module subclasses the `nn.Module`. A neural network is itself a module that comprises other modules (layers). 
 
-To define a neural network, we subclass nn.Module and initialize the neural network layers in init.
-Every nn.Module subclass implements the operations on input data in the forward method.
+To define a neural network in PyTorch, one needs to subclass `nn.Module` and initialize the neural network layers in the constructor. The `forward` method is then implemented, which conducts operations on input data.
 
-The last linear layer of the neural network returns logits, which are raw values in the range of [-infinity, infinity].
-These values are then passed to the nn.Softmax module to produce probabilities, which are scaled to the range of [0, 1].
-The dim parameter specifies the dimension along which the values must sum to 1.
+Neural networks often have parameterized layers, meaning they have associated weights and biases that are optimized during training. These parameters are automatically tracked when a model object subclasses `nn.Module`.
 
-Many layers inside a neural network are parameterized, i.e. have associated weights and biases that are optimized during training.
-Subclassing nn.Module automatically tracks all fields defined inside your model object, and makes all parameters accessible using your model's parameters() or named\_parameters() methods.
+The last linear layer of a neural network usually returns logits, which are raw values ranging from negative infinity to infinity. These logits are then fed through a softmax function to produce probabilities that sum to 1 across specified dimensions.
 
+\subsection{Automatic Differentiation with torch.autograd}
 
-\subsection{Automatic differentiation with torch.autograd}
-PyTorch has a built-in differentiation engine called torch.autograd that supports automatic computation of gradient for any computational graph.
-It provides classes and functions implementing automatic differentiation of arbitrary scalar valued functions.
-It requires minimal changes to the existing code - you only need to declare Tensors for which gradients should be computed with the requires\_grad=True keyword.
+PyTorch provides a built-in differentiation engine called `torch.autograd`. It supports automatic computation of gradients for any computational graph. It is a powerful tool that eases the computation of gradients for neural networks, which is essential for the optimization of the weights.
 
-In order to optimize weights of parameters in the neural network, we need to compute the derivatives of our loss function with respect to parameters.
-To compute those derivatives, we call loss.backward(), and then retrieve the values from w.grad and b.grad.
+In practice, you only need to declare which tensors you want gradients for by setting `requires\_grad=True`. After computing the loss, calling `loss.backward()` will compute the gradients for all tensors with `requires\_grad=True`. These gradients are accumulated in the `.grad` attribute of the respective tensors.
 
-The backward pass kicks off when .backward() is called on the DAG root. autograd then accumulates them in the respective tensor's .grad attribute using the chain rule, propagates all the way to the leaf tensors.
+\subsection{Training the Network}
+
+Training a neural network involves iterating over the training data, and for each batch, performing forward and backward passes through the network, computing the loss and updating the weights using an optimization algorithm such as Stochastic Gradient Descent (SGD).
+
+During training, the data is passed through the network (forward pass), and a loss is calculated reflecting how far the network's output is from the ground truth. The gradients of this loss with respect to the network's weights are computed, and the optimizer uses these gradients to update the weights (backward pass).
+
+\subsection{Saving and Loading Models}
+
+Once a model has been trained, it is possible to save its parameters to a file. This is useful for reusing models, sharing them, or deploying them in production environments. In PyTorch, you can use `torch.save()` to save a model's state dictionary, and `torch.load()` to load the state dictionary into a model's architecture.
+
+This process allows for the preservation and later restoration of models, facilitating continuity in research and development, as well as the deployment of machine learning models into production environments.
