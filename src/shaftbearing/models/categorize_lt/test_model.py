@@ -41,7 +41,6 @@ def test_model(model, test_dataloader, evaluation_function):
 
 
 def test_model_matrix(model, test_dataloader):
-    print('Testing model...')
     model.eval()
     all_predictions = []
     all_targets = []
@@ -62,12 +61,12 @@ def test_model_matrix(model, test_dataloader):
     print(f'Total Accuracy: {total_accuracy:.3f} ({num_correct} out of {total_samples} correct)')
 
     # Plot confusion matrix
-    print('PLOOOT')
     plt.figure(figsize=(10, 7))
     sns.heatmap(cf_matrix, annot=True, fmt="d", cmap="Blues")
     plt.xlabel('Predicted')
     plt.ylabel('True')
     plt.title('Confusion Matrix')
+    # plt.savefig('docs/assets/bearings-model/confusion-matrix.png', dpi=300)
     plt.show()
 
 
