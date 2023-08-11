@@ -1,0 +1,126 @@
+\chapter{Hyperparameter Optimization}
+\label{sec:hyperparameter_optimization}
+
+\section{Introduction}
+
+Hyperparameters are crucial components in the configuration of neural networks and can significantly influence the performance of a model. Unlike model parameters, which are learned during training, hyperparameters are not learned from the data and must be set before the training process begins. This chapter aims to analyze how various hyperparameters affect the accuracy of the neural network model constructed for predicting bearing lifetime. Rather than focusing on finding the optimal set of hyperparameters, the goal is to gain an understanding of their influence on the model's performance.
+
+
+\section{Strategies for Hyperparameter Optimization}
+
+There are various strategies for hyperparameter optimization. Some of the commonly used methods include Random Search, Bayesian Optimization, and Genetic Algorithms. Random Search involves randomly sampling hyperparameters from a given range and is sometimes more efficient than exhaustively trying all combinations. Bayesian Optimization builds a probability model of the objective function and uses it to suggest better hyperparameters. Genetic Algorithms simulate the process of natural selection to choose sets of hyperparameters.
+
+However, for the purpose of understanding the influence of hyperparameters, Grid Search is employed in this chapter. Grid Search entails specifying a subset of hyperparameter values, and it evaluates the model performance for each combination within the predefined hyperparameter space. By exhaustively evaluating all combinations, Grid Search provides insights into how changes in hyperparameters affect model performance. However, as the number of hyperparameters increases, the number of experiments can grow exponentially, making it computationally expensive. For this reason, the selection of hyperparameters in this chapter is limited.
+
+
+\section{Automated Training and Testing Script}
+
+To efficiently run a large number of experiments, an automated script is developed that combines dataset generation, splitting, training, and testing. This streamlined process is essential for handling the extensive experiments conducted during the Grid Search without manual intervention. By automating the end-to-end process, each experiment can be consistently conducted under similar conditions, allowing for a fair comparison of results across different hyperparameter combinations.
+
+
+\section{Parameters Under Investigation}
+
+In this analysis, four hyperparameters are being analyzed, each with a distinct range of values:
+
+\begin{enumerate}
+    \item \textbf{Output Size}: Refers to the number of neurons in the output layer, tested across the values \{5, 10, 20, 50, 100\}.
+    \item \textbf{Hidden Size}: Pertains to the number of neurons in the hidden layer, examined across \{20, 50, 100, 200, 500\}.
+    \item \textbf{Activation Function}: Represents the non-linearity introduced into the network. The functions considered include \ac{relu}, \ac{tanh}, and Sigmoid.
+    \item \textbf{Batch Size}: Denotes the number of training examples in a single iteration, spanning the values \{32, 64, 128, 256\}.
+\end{enumerate}
+
+The decision to limit the analysis to these four hyperparameters was made to keep the total number of experiments manageable. The chosen ranges result in a total of $5 \cot 5 \cdot 3 \cdot 4 = 300$ combinations. This allows for a comprehensive exploration while maintaining a reasonable computational budget, and it yields insightful data on the impact of these hyperparameters on the model's performance.
+
+
+\section{Evaluation Metric}
+
+For evaluating the model's performance across different hyperparameter configurations, the Mean Squared Error (\ac{mse}) is used. The \ac{mse} measures the average of the squares of the differences between the estimated values and the actual values. However, in this analysis, the \ac{mse} is normalized by the output size to account for the relative error. A lower \ac{mse} indicates better performance. Due to the sheer number of experiments, employing confusion matrices for comparison is not feasible.
+
+The function below takes three arguments as input - \verb|true| representing the actual values, \verb|pred| representing the predicted values, and \verb|output_size| representing the number of bins in the output layer. It calculates the squared differences between corresponding elements of the \verb|true| and \verb|pred| lists, computes the mean of these squared differences, and then normalizes it by dividing by the \verb|output_size|.
+
+\begin{verbatim}
+import numpy as np
+
+def average_mean_squared_error(true, pred, output_size):
+    squared_errors = (np.array(true) - np.array(pred)) ** 2
+    average_mse = np.mean(squared_errors)
+    normalized_mse = average_mse / output_size
+    return normalized_mse
+\end{verbatim}
+
+In order to better evaluate the value, a score is calculated using the formula $\text{score} = \frac{1}{\text{normalized MSE}}$. A higher score indicates better performance.
+
+Using the score as an evaluation metric, the script is capable of comparing different hyperparameter configurations quantitatively, thereby aiding in the analysis of the hyperparameters' effects on the model's accuracy.
+
+
+\section{Logging and Evaluating Results}
+
+To perform a thorough analysis of how hyperparameters influence the neural network model's performance, the results of the grid search experiments are both logged for visualization and statistically evaluated.
+
+TensorBoard is employed to log and provide an interactive visualization of the experiments' results. It is instrumental in creating plots that display the relationships between hyperparameters and the mean squared error, making it easier to identify trends or patterns in how the hyperparameters influence model performance. TensorBoard's capabilities for simultaneous examination of multiple experiments and tracking the evolution of evaluation metrics over time are highly beneficial.
+
+In tandem with using TensorBoard for visualization, a statistical evaluation is conducted by calculating the averages of the mean squared error for each value of each hyperparameter across all experiments sharing the same value for a given hyperparameter. This approach isolates the effect of each hyperparameter, enabling a focused analysis of how variations in a single hyperparameter impact the model's performance.
+
+
+\section{Results of the Grid Search}
+
+In this section, we discuss the results obtained from the grid search and analyze the effects of different hyperparameters on the performance metric used, which is the score calculated as \(1/\text{MSE}\). Below, we present a table summarizing the average scores for different values of the hyperparameters:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Hyperparameter} & \textbf{Average Scores} \\
+\hline
+\textbf{Output Size} & 5: 68.482, 10: 39.435, 20: 20.522, 50: 7.581, 100: 3.591 \\
+\hline
+\textbf{Hidden Size} & 500: 42.284, 200: 35.498, 100: 27.756, 50: 20.432, 20: 13.643 \\
+\hline
+\textbf{Activation Function} & ReLU: 43.552, Tanh: 27.24, Sigmoid: 12.975 \\
+\hline
+\textbf{Batch Size} & 32: 38.588, 64: 30.881, 128: 25.168, 256: 17.053 \\
+\hline
+\end{tabular}
+\caption{Average scores for different values of the hyperparameters.}
+\end{table}
+
+\subsubsection{Output Size}
+
+As the output size increases, there is a noticeable decline in performance scores. A smaller output size, such as 5 or 10, yields substantially better performance compared to larger output sizes like 50 or 100. This could be due to the fact that with smaller output sizes, the model is classifying into fewer categories, which may be inherently easier. However, it is important to select the output size based on the specific requirements of the task. For instance, in predicting the lifetime of ball bearings, it might be more practical to have fewer bins (e.g., 10) and closely monitor the ones nearing the end of their lifetime.
+
+\subsubsection{Hidden Size}
+
+The model's performance improves as the hidden size increases. A hidden size of 500 offers the best performance among the values tested. This suggests that a larger hidden size allows the network to learn more complex representations of the data, which is beneficial for this task. However, it's important to be cautious of overfitting when using a large hidden size, especially for small datasets.
+
+\subsubsection{Activation Function}
+
+Among the activation functions tested, ReLU yields the highest scores, followed by Tanh, with Sigmoid yielding the lowest scores. ReLU is often preferred in practice due to its ability to deal with the vanishing gradient problem and its computational efficiency. It's also less likely to saturate compared to the Sigmoid function, which can be beneficial in training deeper networks.
+
+\subsubsection{Batch Size}
+
+The results show that smaller batch sizes, like 32, tend to yield higher scores compared to larger batch sizes. Smaller batch sizes allow for more frequent updates, which can sometimes result in faster convergence. However, it's also worth considering the trade-off with computation time, as smaller batch sizes typically require more iterations to complete an epoch.
+
+\subsubsection{Discussion}
+
+Based on the observed results, a configuration with a smaller output size, a larger hidden size, using the ReLU activation function, and a smaller batch size seems to perform the best. However, selection of hyperparameters should also take into account other factors such as computation time, complexity, and generalization to unseen data. Additionally, it's important to conduct further experiments to validate these findings on different datasets and tasks.
+
+
+\section{Summary}
+
+In this chapter, an extensive analysis was performed to understand the influence of various hyperparameters on the neural network model's performance for predicting the lifetime of ball bearings. The analysis, which involved a Grid Search and was visualized using TensorBoard, concentrated on the impact of output size, hidden size, activation function, and batch size on the mean squared error.
+
+The key takeaways from this analysis are:
+
+\begin{itemize}
+    \item A smaller output size tends to perform better. However, it is important to consider the practical implications of this choice, as having too few bins may limit the model's ability to provide sufficiently granular predictions.
+    
+    \item A larger hidden size generally improves the model's performance, but this comes with increased complexity and computational cost.
+    
+    \item Among the activation functions, ReLU appears to be the most effective in this context, likely due to its non-saturating nature which can help in tackling the vanishing gradient problem.
+    
+    \item A smaller batch size yields better results, but it is crucial to consider the trade-off with computation time, as smaller batch sizes can make the training process slower.
+\end{itemize}
+
+While these insights are valuable for tuning the neural network for this specific application, it is essential to recognize that hyperparameters can have intricate interactions, and their effects may not always be straightforward or isolated. Additionally, this analysis was limited to a subset of hyperparameters, and expanding the scope could lead to further understanding.
+
+In conclusion, this chapter sheds light on the critical role of hyperparameters in neural network performance. The findings offer a solid foundation for configuring neural networks for predicting the lifetime of ball bearings. However, it's important to balance performance, computation time, and complexity while tuning hyperparameters, and be mindful of the specific requirements and constraints of the application at hand.

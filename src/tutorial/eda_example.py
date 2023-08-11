@@ -1,8 +1,6 @@
-import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn import datasets
 
 matplotlib.use('pgf')
 matplotlib.rcParams.update({

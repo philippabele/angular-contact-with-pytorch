@@ -44,7 +44,7 @@ The first step in our \ac{eda} is the initial inspection of the dataset. This in
   \end{tabular}
 \end{table}
 
-Our dataset is a structured one, with \(Fr\) and \(n\) recorded as integer values and \(Lifetime\) as a floating-point number. \(Fr\) represents the radial force applied on the bearing in Newton (N) and ranges from 200 to 4000 N. \(n\) represents the rotational speed in rotations per minute (rpm) and spans values from 100 to 3500 rpm. \(Lifetime\) is the expected lifetime of the bearing in hours (h) and varies from 88,445,568.46 h to 116.37 h. A significant observation made at this point is the step-wise increment pattern seen in \(Fr\) and \(n\), and the corresponding decrement in \(Lifetime\). Each unique combination of \(Fr\) and \(n\) represents different operational conditions for the bearing, and their influence on the bearing's expected \(Lifetime\) is our primary point of interest.
+Our dataset is a structured one, with \(Fr\) and \(n\) recorded as integer values and \(Lifetime\) as a floating-point number. \(Fr\) represents the radial force applied on the bearing in Newton (N) and ranges from 200 to 4000 N. \(n\) represents the rotational speed in \ac{rpm} and spans values from 100 to 3500 rpm. \(Lifetime\) is the expected lifetime of the bearing in hours (h) and varies from 88,445,568.46 h to 116.37 h. A significant observation made at this point is the step-wise increment pattern seen in \(Fr\) and \(n\), and the corresponding decrement in \(Lifetime\). Each unique combination of \(Fr\) and \(n\) represents different operational conditions for the bearing, and their influence on the bearing's expected \(Lifetime\) is our primary point of interest.
 
 No missing values are present in the dataset, which allows us to proceed with the analysis without the need for imputation or deletion strategies.
 
@@ -75,7 +75,7 @@ To better visualize the distribution of \(Lifetime\), we employed histograms and
 
 While the \(Lifetime\) data features a wide range of values, this is to be expected given the nature of the measured attribute. The variation can be attributed to the range of operating conditions (\(Fr\) and \(n\)) represented in the dataset. In this context, extreme values in \(Lifetime\) are not necessarily outliers in the traditional sense, but rather indicate the broad spectrum of potential lifetimes for the shaft bearings under different conditions.
 
-Overall, univariate analysis offers valuable insights into each feature's characteristics. It also paves the way for a more nuanced understanding of interactions between features in the subsequent multivariate analysis.
+Overall, the univariate analysis offers valuable insights into each feature's characteristics. It also paves the way for a more nuanced understanding of interactions between features in the subsequent multivariate analysis.
 
 
 \section{Multivariate Analysis}
@@ -84,39 +84,38 @@ In the process of \ac{eda}, multivariate analysis plays a critical role in exami
 
 To understand the relationships between the variables \(Fr\), \(n\), and \(Lifetime\), we used various visualization techniques, including 3D plots, pair plots, and correlation matrices.
 
-A 3D plot, representing the three variables, allowed us to perceive the nature of the interactions between them. We observed a significant decrease in \(Lifetime\) with an increase in either \(Fr\) or \(n\). This trend is indicative of an inverse exponential relationship between these variables. The relationship was more pronounced with \(Fr\), implying that \(Fr\) had a greater impact on the \(Lifetime\) compared to \(n\).
+The 3D plot (Figure \ref{fig:bearings-3dplot}), with axes representing \(Fr\), \(n\), and the logarithm of \(Lifetime\), helped us to visually interpret the interactions between these variables. We used the logarithm of \(Lifetime\) to better visualize the effects, as this transformation does not change the relations but makes it easier to observe the trends. We noticed that the \(Lifetime\) showed a pronounced decrease as either \(Fr\) or \(n\) increased, suggesting an inverse relationship. Moreover, the decrease in \(Lifetime\) was steeper with respect to \(Fr\) compared to \(n\), indicating that \(Fr\) has a more significant impact on \(Lifetime\).
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{assets/bearings-eda/3dplot.png}
+    \includegraphics[width=0.8\textwidth]{assets/bearings-eda/3dplot-log.png}
     \caption{3D plot of Fr, n, and Lifetime}
     \label{fig:bearings-3dplot}
 \end{figure}
 
-Recognizing the potential exponential relationship, we engineered two new features, \(Fr \cdot n\) and \(Fr/n\), to further investigate these relationships. The choice of these features was motivated by their ability to reveal the interactions and the relative impact of \(Fr\) and \(n\) on \(Lifetime\).
+In addition to the 3D plot, we utilized a pair plot (Figure \ref{fig:bearings-pairplot}) to analyze pairwise relationships between the variables. Similar to the 3D plot, the pair plot further affirmed the observation that the lifetime decreases more sharply when plotted against \(Fr\) compared to \(n\). This could be attributed to the difference in data range between \(Fr\) and \(n\), but also to the greater impact of \(Fr\) on the lifetime.
 
-Subsequently, pair plots and correlation matrices (Figures \ref{fig:bearings-pairplot} and \ref{fig:bearings-corrmat}) were generated, incorporating the original and engineered features. These visualizations provided insights into the relationships and correlations between the variables, aiding in the derivation of the exponent in our hypothesis equation.
-
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{assets/bearings-eda/pairplot.png}
+    \includegraphics[width=0.8\textwidth]{assets/bearings-eda/pairplot.png}
     \caption{Pairplot of variables}
     \label{fig:bearings-pairplot}
 \end{figure}
 
-\begin{figure}[ht]
+Lastly, we examined the correlation matrix (Figure \ref{fig:bearings-corrmat}) to quantify the relationships between the variables. We observed a stronger negative correlation of \(Fr\) with the logarithm of \(Lifetime\) compared to \(n\). This negative correlation implies that as \(Fr\) increases, \(Lifetime\) decreases, and vice versa. Moreover, the stronger correlation with the logarithm of \(Lifetime\) further suggests an exponential relationship between these variables.
+
+\begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{assets/bearings-eda/correlation-matrix.png}
+    \includegraphics[width=0.8\textwidth]{assets/bearings-eda/correlation-matrix.png}
     \caption{Correlation matrix of variables}
     \label{fig:bearings-corrmat}
 \end{figure}
 
-The correlation matrix highlighted an intriguing characteristic of our engineered feature \(Fr/n\). This feature exhibited a distinctive correlation with \(Fr\), indicating a proportional relationship. From this, we could infer the relative weight of the exponents in our potential model equation by examining the inverse of this correlation. This gave us a critical clue towards the development of our hypothesis and shaped our understanding of the relationships within the dataset.
-
-Through multivariate analysis and feature engineering, we've enriched our dataset and gained insights into the relationships between the variables. These findings will now serve as the foundation for the generation of our hypothesis in the next section.
+The insights gained from the multivariate analysis regarding the impact of \(Fr\) and \(n\) on \(Lifetime\) are valuable. They provide a basis for the subsequent steps in model development, and enable a more informed and refined approach to predictive analysis.
 
 
 \section{Hypothesis Generation}
+\label{sec:bearings-hypothesis}
 
 During our \ac{eda}, we observed an inverse relationship between \(Lifetime\) and both \(Fr\) and \(n\). This relationship suggested an exponential decay form, as depicted by the 3D plot. From this observation, we hypothesized that the relationship could be represented by a function of the form:
 
@@ -147,22 +146,24 @@ Our refined empirical hypothesis for the function form thus became:
 Lifetime \approx \frac{4.1378625767 \cdot 10^{17}}{Fr^{10/3} \cdot n}
 \end{equation}
 
+Interestingly, there is a striking resemblance between our derived formula and the ISO standard formula for the lifetime of roller bearings under dynamic load in section \ref{sec:lifetime_calculation}. In both formulas, we see that the lifetime is inversely proportional to \(n\) and the load to the power of \(\frac{10}{3}\). In the ISO standard formula, there is also a factor \(C\), which represents the dynamic load rating. This value is not present in the dataset, and it's possible that it has been constant for all samples or already factored into the constant in our empirical formula. The similarity in the structure of these formulas suggests that our dataset may represent the lifetimes of roller bearings under varying conditions of force and rotational speed.
+
 This hypothesis serves as a benchmark and starting point for our model. To assess the fit of our function to the dataset, we calculated the relative error between the \(Lifetime\) and the function's output. The error primarily consists of rounding errors, as our refined formula closely approximates the original dataset.
 
 The relative error was calculated as follows:
 
 \begin{equation}
-\text{relative error} = \left(\frac{\text{actual Lifetime}}{\text{predicted Lifetime}}\right) - 1
+\text{relative error} = \left(\frac{\text{dataset Lifetime}}{\text{equation Lifetime}}\right) - 1
 \end{equation}
 
-This calculation provides a normalized measure of how the predicted Lifetime deviates from the actual Lifetime in the dataset.
+This calculation provides a normalized measure of how the function deviates from the the dataset.
 
 The mean of the relative error is \(4.56 \cdot 10^{-12}\), very close to zero, and the standard deviation is \(1.34 \cdot 10^{-10}\), indicating that the error is tightly clustered around the mean. Figure (\ref{fig:bearings-error}) visually supports this, showing the relative error on the z-axis. Despite the plot's limited precision, it's evident that the values represent a very narrow range between \(-4.72 \cdot 10^{-10}\) and \(4.56 \cdot 10^{-10}\).
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{assets/bearings-eda/3dplot-error.png}
-    \caption{3D plot showing the relative error between the actual \(Lifetime\) and the predicted values from our function in \(10^{-10}\).}
+    \caption{3D plot showing the relative error between the Lifetime of the dataset and our function in \(10^{-10}\).}
     \label{fig:bearings-error}
 \end{figure}
 

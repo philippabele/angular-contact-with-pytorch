@@ -4,7 +4,7 @@ import seaborn as sns
 import numpy as np
 
 # Load the data
-data = pd.read_csv('data/shaft-bearing/data.csv')
+data = pd.read_csv('data/shaftbearing/data.csv')
 
 # Transform 'Lifetime' column using Logarithm and add it as a new column
 data['log(Lifetime)'] = np.log(data['Lifetime'])
@@ -43,7 +43,7 @@ fig.savefig('docs/assets/bearings-eda/boxplot.png', dpi=300)
 
 # Pairplot
 data_pair = data.copy()
-pair = sns.pairplot(data_pair, hue='log(Lifetime)', palette='crest')
+pair = sns.pairplot(data_pair, hue='Lifetime', palette='crest')
 plt.subplots_adjust(top=0.95)
 plt.suptitle('Pairplot of Fr, n, Lifetime and interaction features')
 pair.savefig('docs/assets/bearings-eda/pairplot.png', dpi=300)
